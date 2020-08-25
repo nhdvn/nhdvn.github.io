@@ -1,5 +1,5 @@
-title: "ControlBot"
-author: "ControlBot"
+title: "NHD"
+author: "nhdvn"
 description: ""
 permalink: /:title/
 date_format: "%B %d, %Y"
@@ -29,8 +29,8 @@ navigation:
   - {file: "about.html", icon: user}
 
 external:
-  - {title: Mail, icon: envelope, url: "mailto:icontrolbotnet@gmail.com"}
-  - {title: Github, icon: github, url: "https://github.com/nhdung1920"}
+  - {title: Mail, icon: envelope, url: "mailto:nhdroot@gmail.com"}
+  - {title: Github, icon: github, url: "https://github.com/nhdvn"}
 
 comments:
 #  disqus_shortname: ""      # see https://disqus.com/
