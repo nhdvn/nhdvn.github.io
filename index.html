@@ -274,7 +274,7 @@
   <nav class="site-nav" aria-label="Sections">
     <a href="#head">Home</a>
     {%- if p.publications and p.publications.size > 0 %}
-    <a href="#publications">Publications</a>
+    <a href="#publications">Publication</a>
     {%- endif %}
     {%- if p.research and p.research.size > 0 %}
     <a href="#research">Research</a>
@@ -367,7 +367,7 @@
   {%- assign me = p.author_name | default: p.name %}
   {%- capture me_html %}<span class="me">{{ me }}</span>{% endcapture %}
   <section class="section" id="publications">
-    <h2>Publications</h2>
+    <h2>Publication</h2>
     <div class="pubs">
       {%- for pub in p.publications %}
       <article class="pub">
