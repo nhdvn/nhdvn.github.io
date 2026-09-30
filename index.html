@@ -212,6 +212,10 @@
     /* Scrolling up re-expands the mobile URL bar, which shrinks the viewport mid-flight
        and makes a smooth scroll land in the wrong place. Jump instead. */
     html { scroll-behavior: auto; }
+    /* Sticky gets re-stuck against a layout viewport that moves while the URL bar animates,
+       which is what makes the bar blink. Fixed is pinned by the compositor instead. */
+    .topbar { position: fixed; top: 0; left: 0; right: 0; transition: none; }
+    body { padding-top: var(--topbar-h); }
   }
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
