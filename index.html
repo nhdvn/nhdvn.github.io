@@ -480,15 +480,27 @@
     });
 
     // The bar wraps to more rows on narrow screens, so measure it rather than guess.
+    // Mobile fires this constantly while scrolling (the URL bar collapsing resizes the
+    // viewport), so write the property only when the height actually changed, once a frame.
     var bar = document.querySelector('.topbar');
     if (bar) {
+      var lastH = -1, queued = false;
       var syncBar = function () {
-        root.style.setProperty('--topbar-h', Math.ceil(bar.getBoundingClientRect().height) + 'px');
+        queued = false;
+        var h = Math.ceil(bar.getBoundingClientRect().height);
+        if (h === lastH) return;
+        lastH = h;
+        root.style.setProperty('--topbar-h', h + 'px');
+      };
+      var queueSync = function () {
+        if (queued) return;
+        queued = true;
+        window.requestAnimationFrame(syncBar);
       };
       syncBar();
-      if (window.ResizeObserver) { new ResizeObserver(syncBar).observe(bar); }
-      else { window.addEventListener('resize', syncBar); }
-      window.addEventListener('orientationchange', syncBar);
+      if (window.ResizeObserver) { new ResizeObserver(queueSync).observe(bar); }
+      else { window.addEventListener('resize', queueSync); }
+      window.addEventListener('orientationchange', queueSync);
     }
 
     document.getElementById('year').textContent = new Date().getFullYear();
