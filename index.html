@@ -82,6 +82,11 @@
     position: sticky; top: 0; z-index: 10; display: flex; align-items: center; gap: 14px;
     min-height: 60px; padding: 0 16px 0 18px; background: var(--bg); border-bottom: 1px solid var(--divider);
     transition: background-color 200ms ease;
+    /* Keep the bar on its own layer: without this mobile re-rasterises it when the URL bar
+       expands on an upward scroll, and it blinks out for a frame. */
+    transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
   }
   .brand { display: flex; align-items: center; gap: 10px; margin-right: auto; padding: 4px 6px;
            font-size: 0.941rem; font-weight: 600; color: var(--text); text-decoration: none;
@@ -204,6 +209,9 @@
     .teaching { font-size: 0.882rem; }
     .teaching th:nth-child(2), .teaching td:nth-child(2) { width: 110px; }
     .teaching th:nth-child(3), .teaching td:nth-child(3) { width: 68px; }
+    /* Scrolling up re-expands the mobile URL bar, which shrinks the viewport mid-flight
+       and makes a smooth scroll land in the wrong place. Jump instead. */
+    html { scroll-behavior: auto; }
   }
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
