@@ -44,7 +44,7 @@
   :root[data-theme="light"] {
     --bg: #FFFFFF; --text: #37352F; --heading: #2B2A26; --muted: #6F6E69; --icon: #91918E;
     --divider: #E9E9E7; --table-head: #F7F6F3; --photo: #F1F1EF; --link-line: rgba(55, 53, 47, 0.4);
-    --accent: #337EA9; --glyph-fill: #FFFFFF;
+    --accent: #337EA9; --glyph-fill: #FFFFFF; --sel: rgba(51, 126, 169, 0.25);
     --blue-bg: #D3E5EF; --blue-fg: #183347; --purple-bg: #E8DEEE; --purple-fg: #412454;
     --green-bg: #DBEDDB; --green-fg: #1C3829; --orange-bg: #FADEC9; --orange-fg: #49290E;
     --pink-bg: #F5E0E9; --pink-fg: #4C2337; --gray-bg: #E3E2E0; --gray-fg: #32302C;
@@ -52,7 +52,7 @@
   :root[data-theme="dark"] {
     --bg: #191919; --text: #D9D9D6; --heading: #EDEDEB; --muted: #9B9A97; --icon: #8A8A87;
     --divider: #2F2F2F; --table-head: #202020; --photo: #252525; --link-line: rgba(255, 255, 255, 0.35);
-    --accent: #529CCA; --glyph-fill: #191919;
+    --accent: #529CCA; --glyph-fill: #191919; --sel: rgba(82, 156, 202, 0.32);
     --blue-bg: #1F3A52; --blue-fg: #B7D4EA; --purple-bg: #3A2B4A; --purple-fg: #D6C3E6;
     --green-bg: #22402F; --green-fg: #B9DDC6; --orange-bg: #4A3120; --orange-fg: #F1C9A6;
     --pink-bg: #4A2A3A; --pink-fg: #EBC2D4; --gray-bg: #333333; --gray-fg: #D0D0D0;
@@ -75,6 +75,9 @@
   .accent { color: var(--accent); }
   /* Markdown bold matches the site's semibold, not the browser's 700 default. */
   strong, b { font-weight: 600; }
+  /* Right-clicking a link selects it; the browser default is a flat grey that buries
+     the text. Tint it with the accent and force a readable text colour. */
+  ::selection { background: var(--sel); color: var(--heading); }
   svg { display: block; }
 
   .skip { position: absolute; left: -9999px; top: 8px; z-index: 20; padding: 8px 12px; background: var(--bg); border: 1px solid var(--divider); border-radius: 6px; }
