@@ -38,6 +38,8 @@
     --font: 'Source Serif 4', Georgia, 'Times New Roman', serif;
     --col: 800px;
     --size: 100%;
+    /* Height of the sticky top bar; measured by script below, this is the fallback. */
+    --topbar-h: 60px;
   }
   :root[data-theme="light"] {
     --bg: #FFFFFF; --text: #37352F; --heading: #2B2A26; --muted: #6F6E69; --icon: #91918E;
@@ -101,7 +103,7 @@
 
   /* ---- page column ---- */
   main { max-width: calc(var(--col) + 40px); margin: 0 auto; padding: 64px 20px 0; }
-  section { scroll-margin-top: 84px; }
+  section, main { scroll-margin-top: calc(var(--topbar-h) + 22px); }
   h1 { margin: 0 0 22px; font-size: 2.588rem; line-height: 1.15; font-weight: 700; color: var(--heading); }
   h2 { margin: 0 0 12px; font-size: 1.529rem; line-height: 1.3; font-weight: 600; color: var(--heading); }
   .section { margin-top: 48px; }
@@ -183,6 +185,7 @@
   /* ---- phones ---- */
   @media (max-width: 640px) {
     body { font-size: 0.971rem; }
+    :root { --topbar-h: 92px; }
     .topbar { flex-wrap: wrap; row-gap: 4px; padding: 9px 12px 8px 10px; }
     .brand svg { width: 32px; height: 27px; }
     .site-nav { order: 3; width: 100%; flex-wrap: wrap; font-size: 0.824rem; }
@@ -475,6 +478,18 @@
       var rel = a.getAttribute('rel');
       a.setAttribute('rel', rel ? rel + ' noopener noreferrer' : 'noopener noreferrer');
     });
+
+    // The bar wraps to more rows on narrow screens, so measure it rather than guess.
+    var bar = document.querySelector('.topbar');
+    if (bar) {
+      var syncBar = function () {
+        root.style.setProperty('--topbar-h', Math.ceil(bar.getBoundingClientRect().height) + 'px');
+      };
+      syncBar();
+      if (window.ResizeObserver) { new ResizeObserver(syncBar).observe(bar); }
+      else { window.addEventListener('resize', syncBar); }
+      window.addEventListener('orientationchange', syncBar);
+    }
 
     document.getElementById('year').textContent = new Date().getFullYear();
   })();
