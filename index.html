@@ -48,6 +48,9 @@
     --blue-bg: #D3E5EF; --blue-fg: #183347; --purple-bg: #E8DEEE; --purple-fg: #412454;
     --green-bg: #DBEDDB; --green-fg: #1C3829; --orange-bg: #FADEC9; --orange-fg: #49290E;
     --pink-bg: #F5E0E9; --pink-fg: #4C2337; --gray-bg: #E3E2E0; --gray-fg: #32302C;
+    /* Text-only versions: the --*-fg above are near-black by design, meant for the tag tint. */
+    --blue-text: #2A6F97; --purple-text: #6B3FA0; --green-text: #2E7D4F;
+    --orange-text: #A85A17; --pink-text: #A33B68; --gray-text: #5A5854;
   }
   :root[data-theme="dark"] {
     --bg: #191919; --text: #D9D9D6; --heading: #EDEDEB; --muted: #9B9A97; --icon: #8A8A87;
@@ -56,6 +59,8 @@
     --blue-bg: #1F3A52; --blue-fg: #B7D4EA; --purple-bg: #3A2B4A; --purple-fg: #D6C3E6;
     --green-bg: #22402F; --green-fg: #B9DDC6; --orange-bg: #4A3120; --orange-fg: #F1C9A6;
     --pink-bg: #4A2A3A; --pink-fg: #EBC2D4; --gray-bg: #333333; --gray-fg: #D0D0D0;
+    --blue-text: #B7D4EA; --purple-text: #D6C3E6; --green-text: #B9DDC6;
+    --orange-text: #F1C9A6; --pink-text: #EBC2D4; --gray-text: #D0D0D0;
   }
 
   *, *::before, *::after { box-sizing: border-box; }
@@ -163,10 +168,20 @@
   .pub-title { display: block; font-weight: 600; line-height: 1.45; color: var(--heading); }
   .pub-authors { display: block; margin-top: 3px; font-size: 0.882rem; line-height: 1.5; color: var(--muted); }
   .pub-authors .me { color: var(--text); font-weight: 600; }
-  .pub-venue { display: block; margin-top: 6px; }
-  /* Match the author line; the tag keeps its colour, only the size changes. */
-  .pub-venue .tag { font-size: 0.882rem; }
-  .pub-rate { margin-left: 9px; font-size: 0.882rem; color: var(--heading); }
+  /* Break between authors, never inside a name: each name is its own nowrap box. */
+  .pub-authors .author { white-space: nowrap; }
+  /* Full venue name and acceptance rate share a row; flex-wrap drops the rate onto its
+     own line as soon as the two no longer fit, at any width, with no breakpoint. */
+  .pub-venue { display: flex; flex-wrap: wrap; align-items: baseline; gap: 3px 9px; margin-top: 5px; }
+  /* Same palette as the tag, but as text colour only: no background, no padding. */
+  .pub-venue-full { font-size: 0.882rem; line-height: 1.5; font-weight: 600; color: var(--muted); }
+  .pub-venue-full.blue { color: var(--blue-text); }
+  .pub-venue-full.purple { color: var(--purple-text); }
+  .pub-venue-full.green { color: var(--green-text); }
+  .pub-venue-full.orange { color: var(--orange-text); }
+  .pub-venue-full.pink { color: var(--pink-text); }
+  .pub-venue-full.gray { color: var(--gray-text); }
+  .pub-rate { font-size: 0.882rem; line-height: 1.5; color: var(--heading); }
   .pub-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; padding-top: 2px; font-size: 0.882rem; }
 
   /* ---- open/close entries (research + industry) ---- */
@@ -359,12 +374,23 @@
         <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" aria-hidden="true"><path d="M4 1.8h5.2L12.5 5v9.2H4z"/><path d="M9 1.8V5h3.5"/><path d="M6.1 5.62h1.1M6.1 8.1h4.3M6.1 10.58h4.3" stroke-width="1.1" stroke-linecap="round"/></svg>
         <div>
           <span class="pub-title">{{ pub.title | markdownify | remove: '<p>' | remove: '</p>' | strip }}</span>
-          <span class="pub-authors">{{ pub.authors | escape | replace: me, me_html }}</span>
+          <span class="pub-authors">
+            {%- assign author_list = pub.authors | split: ', ' -%}
+            {%- for a in author_list -%}
+            <span class="author">{% if a == me %}<span class="me">{{ a | escape }}</span>{% else %}{{ a | escape }}{% endif %}</span>{% unless forloop.last %}, {% endunless %}
+            {%- endfor -%}
+          </span>
           {%- if pub.venue %}
-          <span class="pub-venue"><span class="tag {{ pub.color | default: 'gray' }}">{{ pub.venue | escape }}</span>{% if pub.acceptance %}<span class="pub-rate">{{ pub.acceptance | escape }}</span>{% endif %}</span>
+          <span class="pub-venue">
+            {%- if pub.venue_full %}<span class="pub-venue-full {{ pub.color | default: 'gray' }}">{{ pub.venue_full | escape }}</span>{% endif %}
+            {%- if pub.acceptance and pub.acceptance != '' %}<span class="pub-rate">{{ pub.acceptance | escape }}</span>{% endif %}
+          </span>
           {%- endif %}
         </div>
         <div class="pub-meta">
+          {%- if pub.venue %}
+          <span class="tag {{ pub.color | default: 'gray' }}">{{ pub.venue | escape }}</span>
+          {%- endif %}
           {%- if pub.pdf %}
           <a href="{{ pub.pdf }}">PDF</a>
           {%- endif %}

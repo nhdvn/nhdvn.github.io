@@ -84,7 +84,8 @@ selected_research:
 publications:
   - title: "Efficient Single-Server Online-Offline PIR without Periodic Preprocessing"                                  # (Markdown)
     authors: "Hoang-Dung Nguyen, Jorge Guajardo, Thang Hoang"
-    venue: "IEEE Security & Privacy Symposium 2027"
+    venue: "S&P 2027"
+    venue_full: "IEEE Symposium on Security and Privacy 2027"
     color: purple
     acceptance: "(Acceptance Rate 15.8%)"
     pdf: "https://eprint.iacr.org/2026/2033"
@@ -92,7 +93,8 @@ publications:
 
   - title: "Client-Efficient Online-Offline Private Information Retrieval"
     authors: "Hoang-Dung Nguyen, Jorge Guajardo, Thang Hoang"
-    venue: "Privacy Enhancing Technology Symposium 2025"
+    venue: "PETS 2025"
+    venue_full: "Privacy Enhancing Technologies Symposium 2025"
     color: green
     acceptance: "(Acceptance Rate 19%)"
     pdf: "https://eprint.iacr.org/2024/719"
@@ -101,7 +103,8 @@ publications:
 
   - title: "Breaking Privacy in Model-Heterogeneous Federated Learning"
     authors: "Atharva Haldankar, Arman Riasi, Hoang-Dung Nguyen, Tran Phuong, Thang Hoang"
-    venue: "International Symposium on Research in Attacks, Intrusions and Defenses 2024"
+    venue: "RAID 2024"
+    venue_full: "International Symposium on Research in Attacks, Intrusions and Defenses 2024"
     color: orange
     acceptance: ""
     pdf: "https://dl.acm.org/doi/10.1145/3678890.3678905"
