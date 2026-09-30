@@ -1,0 +1,198 @@
+# =============================================================================
+#  Your homepage content. Everything on the page is read from this one file.
+#
+#  How to update: edit this file on GitHub (or locally), commit, and push.
+#  GitHub rebuilds the site in about a minute. index.html never needs touching.
+#
+#  Rules of thumb
+#   - Keep text inside "double quotes". Values that start with [ or contain
+#     a colon break YAML without them.
+#   - Text fields marked (Markdown) accept **bold**, *italic* and
+#     [link text](https://example.com).
+#   - A list that is left empty ( [] ) hides its whole section and its menu link.
+#   - Tag colours: blue, purple, green, orange, pink, gray.
+# =============================================================================
+
+name: "Hoang-Dung Nguyen"
+
+# How your name appears in author lists, so it can be highlighted.
+author_name: "Hoang-Dung Nguyen"
+
+# One line used by search engines and link previews.
+description: "PhD Student working on Private Information Retrieval  Oblivious RAM, and Searchable Encryption."
+
+photo: "photo.jpg"
+
+# ---- Summary (next to your photo) -------------------------------------------
+#  Leave a blank line inside summary to start a new paragraph.
+summary_lead: ""
+summary: |-
+  I am a fourth-year PhD Student in Applied Cryptography at Virginia Tech,
+  advised by [Professor Thang Hoang](https://thanghoang.github.io/).
+  I completed my Bachelor in Computer Science (Honors Program)
+  at University of Science - VNUHCM with a Research Thesis in
+  Fuzzy Cryptography, advised by [Professor Thuc Nguyen](https://www.researchgate.net/profile/Thuc-Nguyen-16).
+  My English name is **Thomas**.
+  
+  My research builds computer systems for knowlegde retrieval that 
+  deliver privacy and security at scale. I design algorithms and perform cryptanalysis to
+  achieve simple protocols that are theoretically sound, concretely efficient and deployable.
+
+# ---- Links (shown in this order; delete a line to hide it) ------------------
+# type: email | scholar | linkedin | github | dblp | orcid | website | cv
+links:
+  - { type: email,    url: "nhd@vt.edu" }
+  - { type: scholar,  url: "https://scholar.google.com/citations?user=72WdhPoAAAAJ" }
+  - { type: linkedin, url: "https://www.linkedin.com/in/hoang-dung-nguyen" }
+  - { type: github,   url: "https://github.com/nhdvn" }
+  - { type: dblp,     url: "https://dblp.org/search/publ?q=author:Hoang-Dung_Nguyen:author:Thang_Hoang:" }
+  - { type: cv,       url: "#" }
+
+# ---- Research interests -----------------------------------------------------
+interests:
+  - { name: "Private Information Retrieval", color: blue }
+  - { name: "Oblivious RAM",                 color: purple }
+  - { name: "Searchable Encryption",         color: green }
+  - { name: "Knowledge Retrieval",           color: orange }
+  - { name: "Fuzzy Cryptography",            color: pink }
+
+# ---- Selected research ------------------------------------------------------
+# Each item reads as: <name, as a link> <text>
+selected_research:
+  - name: "Escape (S&P 2027)"
+    link: "https://eprint.iacr.org/2026/2033"
+    text: >-                                               # (Markdown)
+      is a new Private Information Retrieval protocol for single-server
+      setting that achieves constant response bandwidth cost while
+      concretely using a minimal (sublinear) amount of 
+      streamlined, hardware-friendly cryptographic operations
+      based on plain Learning With Errors.
+
+  - name: "Pirex (PETS 2025)"
+    link: "https://eprint.iacr.org/2024/719"
+    text: >-                                               # (Markdown)
+      is a two-server Private Information Retrieval with sublinear
+      server complexity inherited from the online-offline preprocessing 
+      paradigm. My work securely reduced the sublinear bandwidth response cost
+      from previous work to constant response overhead
+      without requiring multiple parallel protocol execution for security.
+
+
+
+# ---- Publications (newest first) --------------------------------------------
+# pdf / code / slides are optional: leave any out and its link disappears.
+publications:
+  - title: "Efficient Single-Server Online-Offline PIR without Periodic Preprocessing"                                  # (Markdown)
+    authors: "Hoang-Dung Nguyen, Jorge Guajardo, Thang Hoang"
+    venue: "S&P 2027"
+    color: gray
+    pdf: "https://eprint.iacr.org/2026/2033"
+    code: "https://github.com/vt-asaplab/Escape/"
+
+  - title: "Client-Efficient Online-Offline Private Information Retrieval"
+    authors: "Hoang-Dung Nguyen, Jorge Guajardo, Thang Hoang"
+    venue: "PETS 2025"
+    color: gray
+    pdf: "https://eprint.iacr.org/2024/719"
+    code: https://github.com/vt-asaplab/pirex"
+    slides: "https://github.com/vt-asaplab/pirex/blob/main/PETS.pdf"
+
+  - title: "Breaking Privacy in Model-Heterogeneous Federated Learning"
+    authors: "Atharva Haldankar, Arman Riasi, Hoang-Dung Nguyen, Tran Phuong, Thang Hoang"
+    venue: "RAID 2024"
+    color: gray
+    pdf: "https://dl.acm.org/doi/10.1145/3678890.3678905"
+    code: "https://github.com/vt-asaplab/model-hetero-fl-attacks"
+
+# ---- Research experience (newest first) -------------------------------------
+# open: true shows the entry expanded when the page loads.
+research:
+  - role: "Graduate Researcher"
+    place: "Applied Crypto Group @ Virgnia Tech"
+    when: "Jan 2023 - present"
+    open: true
+    details: "Apart from my research, I also involve in the below projects, advised by Professor Thang Hoang."
+    bullets:
+      - "**Preprocessing PIR via Low-Degree Security**"
+      - "**Distributed Oblivious RAM**"
+
+  - role: "Research Student"
+    place: "[Decentralized Cryptography Research Group - VNUHCM](https://www.fit.hcmus.edu.vn/research/g/decentralized-cryptography)"
+    when: "Aug 2020 - Jul 2022"
+    details: "I was advised by Professor Thuc Nguyen for early research during my undergraduate as follows."
+    bullets:
+      - |-
+        **Biometric Cryptosystem and Authentication via Fuzzy Extractor** [[PDF]](https://www.overleaf.com/read/sztkkvjqvzkd#78e1ce)
+        
+        My work proposed an authentication system that regenerates multiple independent
+        high-entropy keys from one noisy, low-entropy biometric source on demand, so neither user keys
+        nor biometrics are ever stored remotely on a server for verification, only non-sensitive helper data.
+      
+      - |-
+        **A Threshold Variant for MuSig Schnorr Multi-Signature Scheme** [[PDF]](https://github.com/nhdvn/multisig/blob/master/report_english.pdf)
+        
+        My work proposed a threshold variant of MuSig with distributed key generation, where
+        hash-weighted shares prevent rogue-key attacks and publicly verifiable polynomial
+        commitments over ECC P-256 yield one aggregated group key and a constant-size signature
+        with hidden signers.
+
+# ---- Teaching experience ----------------------------------------------------
+#  teaching_intro is optional (Markdown). Delete it and the paragraph disappears.
+teaching_intro: >-
+  I have served as a Graduate Teaching Assistant for the following 
+  Computer Science courses at Virginia Tech, by developing coursework materials, 
+  grading student submissions, and holding weekly office hours. 
+teaching:
+  - { course: "[[CS 4264] Principle of Computer Security](https://people.cs.vt.edu/~ribbens/upc/courses/CS4264Proposal.pdf)",    term: "Spring 2023 - 2025", students: "~90" }
+  - { course: "[[CS 4104] Data Structure & Algorithm Analysis](https://people.cs.vt.edu/~ribbens/upc/courses/CS4104Proposal.pdf)", term: "Fall 2024 - 2025", students: "~75" }
+  - { course: "[[CS 5584] Network Security](https://ece.vt.edu/grad/courses/5584.html)", term: "Fall 2026", students: "~50" }
+
+# ---- Industry experience (newest first) -------------------------------------
+industry:
+  - role: "Cloud Security Intern"
+    place: "[Fossil Group - Center for Wearables Research](https://www.fossilgroup.com/apac-careers/corporate-apac/fossil-vietnam-jobs/)"
+    when: "May 2022 - Dec 2022"
+    open: true
+    details: "I was fortunate to be the first intern in the security team and contributed to the below projects."
+    bullets:
+      - |-
+        **Enhancing Security Posture Assessment for Cloud Inventory**
+        
+        My work built CVE monitoring across hundreds of cloud computing assets and introduced
+        security model objects which link CVE findings (its machine, cluster,
+        and designated team) to a hierarchical cross-entity graph relation, surfacing high-risk
+        misconfigurations.
+
+      - |-
+        **Reducing Manual Triage on Software and Network Vulnerabilities**
+        
+        I developed two modules that (1) probed hundreds of internal and external subdomains for
+        HTTP status, routing paths, gateways, authentication and TLS exposure, and 
+        (2) monitored SCA/SAST results from pull requests
+        across hundreds of internal repos to issue tickets to designated teams. 
+
+  - role: "Security Research Intern"
+    place: "Stealth Startup"
+    when: "Nov 2020 - Mar 2021"
+    details: "I was given an opportunity to practice ethical security research in a local startup."
+    bullets:
+      - |-
+        **Fileless Execution Forensics on Windows**
+
+        My work analyzed how legacy NetMeeting installer (instnm.exe) and auto-elevating
+        System File Checker (sfc.exe) can execute untrusted code from nonstandard paths and
+        offline OS images.
+
+      - |-
+        **Evasion and Persistence Mechanisms on Windows**
+
+        My work measured how runtime and on-disk detection hold up against thread hijacking,
+        API/IAT hooking, DLL proxying, and custom PE loaders which run payloads in memory
+        through reflective DLL injection and process hollowing variants.
+
+      - |-
+        **Privilege Escalation and Memory Analysis on Linux**
+
+        My work studied stack and heap corruption for ROP/JOP code-reuse attacks
+        against OS hardening (ASLR, NX, StackGuard, PIE)
+        and ELF linking constraints (PLT/GOT, RELRO, ASCII-Armor).
