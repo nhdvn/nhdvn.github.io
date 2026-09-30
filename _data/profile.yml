@@ -127,15 +127,15 @@ research:
       - |-
         **Biometric Cryptosystem and Authentication via Fuzzy Extractor** [[PDF]](https://www.overleaf.com/read/sztkkvjqvzkd#78e1ce)
         
-        My work proposed an authentication system that regenerates multiple independent
-        high-entropy keys from one noisy, low-entropy biometric source on demand, so neither user keys
-        nor biometrics are ever stored remotely on a server. Verification only needs non-sensitive helper data.
+        My work proposes an authentication system that regenerates multiple independent, 
+        high-entropy cryptographic keys on demand from a single noisy, low-entropy biometric source. 
+        Neither the user keys nor biometrics are stored remotely. The server retains only non-sensitive helper data.
       
       - |-
         **A Threshold Variant for MuSig Schnorr Multi-Signature Scheme** [[PDF]](https://github.com/nhdvn/multisig/blob/master/report_english.pdf)
         
         My work proposed a threshold variant of MuSig with distributed key generation, where
-        hash-weighted shares prevent rogue-key attacks and publicly verifiable polynomial
+        hash-weighted shares prevent rogue-key attacks, while publicly verifiable polynomial
         commitments over ECC P-256 yield one aggregated group key and a constant-size signature
         with hidden signers.
 
