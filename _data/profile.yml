@@ -22,6 +22,8 @@ author_name: "Hoang-Dung Nguyen"
 description: "PhD Student working on Private Information Retrieval  Oblivious RAM, and Searchable Encryption."
 
 photo: "photo.jpg"
+# Small line under the photo. Delete it and the line disappears.
+photo_caption: "My English name is **Thomas**"
 
 # ---- Summary (next to your photo) -------------------------------------------
 #  Leave a blank line inside summary to start a new paragraph.
@@ -29,10 +31,9 @@ summary_lead: ""
 summary: |-
   I am a fourth-year PhD Student in Applied Cryptography at Virginia Tech,
   advised by [Professor Thang Hoang](https://thanghoang.github.io/).
-  I completed my Bachelor in Computer Science (Honors Program)
+  Prior to this, I completed my Bachelor of Science in Computer Science (Honors Program)
   at University of Science - VNUHCM with a Research Thesis in
   Fuzzy Cryptography, advised by [Professor Thuc Nguyen](https://www.researchgate.net/profile/Thuc-Nguyen-16).
-  My English name is **Thomas**.
   
   My research builds computer systems for knowlegde retrieval that 
   deliver privacy and security at scale. I design algorithms and perform cryptanalysis to
@@ -71,12 +72,11 @@ selected_research:
   - name: "Pirex (PETS 2025)"
     link: "https://eprint.iacr.org/2024/719"
     text: >-                                               # (Markdown)
-      is a two-server Private Information Retrieval with sublinear
+      is a two-server Private Information Retrieval protocol with sublinear
       server complexity inherited from the online-offline preprocessing 
-      paradigm. My work securely reduced the sublinear bandwidth response cost
-      from previous work to constant response overhead
-      without requiring multiple parallel protocol execution for security.
-
+      paradigm. My work reduces the response bandwidth overhead of prior approaches 
+      from sublinear to constant, while maintaining security without requiring 
+      multiple parallel executions of the protocol.
 
 
 # ---- Publications (newest first) --------------------------------------------
@@ -84,23 +84,26 @@ selected_research:
 publications:
   - title: "Efficient Single-Server Online-Offline PIR without Periodic Preprocessing"                                  # (Markdown)
     authors: "Hoang-Dung Nguyen, Jorge Guajardo, Thang Hoang"
-    venue: "S&P 2027"
-    color: gray
+    venue: "IEEE Security & Privacy Symposium 2027"
+    color: purple
+    acceptance: "(Acceptance Rate 15.8%)"
     pdf: "https://eprint.iacr.org/2026/2033"
     code: "https://github.com/vt-asaplab/Escape/"
 
   - title: "Client-Efficient Online-Offline Private Information Retrieval"
     authors: "Hoang-Dung Nguyen, Jorge Guajardo, Thang Hoang"
-    venue: "PETS 2025"
-    color: gray
+    venue: "Privacy Enhancing Technology Symposium 2025"
+    color: green
+    acceptance: "(Acceptance Rate 19%)"
     pdf: "https://eprint.iacr.org/2024/719"
-    code: https://github.com/vt-asaplab/pirex"
+    code: "https://github.com/vt-asaplab/pirex"
     slides: "https://github.com/vt-asaplab/pirex/blob/main/PETS.pdf"
 
   - title: "Breaking Privacy in Model-Heterogeneous Federated Learning"
     authors: "Atharva Haldankar, Arman Riasi, Hoang-Dung Nguyen, Tran Phuong, Thang Hoang"
-    venue: "RAID 2024"
-    color: gray
+    venue: "International Symposium on Research in Attacks, Intrusions and Defenses 2024"
+    color: orange
+    acceptance: ""
     pdf: "https://dl.acm.org/doi/10.1145/3678890.3678905"
     code: "https://github.com/vt-asaplab/model-hetero-fl-attacks"
 
@@ -108,8 +111,8 @@ publications:
 # open: true shows the entry expanded when the page loads.
 research:
   - role: "Graduate Researcher"
-    place: "Applied Crypto Group @ Virgnia Tech"
-    when: "Jan 2023 - present"
+    place: "[Applied Crypto Group @ Virgnia Tech](https://thanghoang.github.io/#group)"
+    when: "Jan 2023 - Present"
     open: true
     details: "Apart from my research, I also involve in the below projects, advised by Professor Thang Hoang."
     bullets:
@@ -119,14 +122,14 @@ research:
   - role: "Research Student"
     place: "[Decentralized Cryptography Research Group - VNUHCM](https://www.fit.hcmus.edu.vn/research/g/decentralized-cryptography)"
     when: "Aug 2020 - Jul 2022"
-    details: "I was advised by Professor Thuc Nguyen for early research during my undergraduate as follows."
+    details: "I received early research guidance from Professor Thuc Nguyen on these undergraduate projects:"
     bullets:
       - |-
         **Biometric Cryptosystem and Authentication via Fuzzy Extractor** [[PDF]](https://www.overleaf.com/read/sztkkvjqvzkd#78e1ce)
         
         My work proposed an authentication system that regenerates multiple independent
         high-entropy keys from one noisy, low-entropy biometric source on demand, so neither user keys
-        nor biometrics are ever stored remotely on a server for verification, only non-sensitive helper data.
+        nor biometrics are ever stored remotely on a server. Verification only needs non-sensitive helper data.
       
       - |-
         **A Threshold Variant for MuSig Schnorr Multi-Signature Scheme** [[PDF]](https://github.com/nhdvn/multisig/blob/master/report_english.pdf)
@@ -140,7 +143,7 @@ research:
 #  teaching_intro is optional (Markdown). Delete it and the paragraph disappears.
 teaching_intro: >-
   I have served as a Graduate Teaching Assistant for the following 
-  Computer Science courses at Virginia Tech, by developing coursework materials, 
+  Computer Science courses at Virginia Tech, developing coursework materials, 
   grading student submissions, and holding weekly office hours. 
 teaching:
   - { course: "[[CS 4264] Principle of Computer Security](https://people.cs.vt.edu/~ribbens/upc/courses/CS4264Proposal.pdf)",    term: "Spring 2023 - 2025", students: "~90" }
@@ -174,7 +177,7 @@ industry:
   - role: "Security Research Intern"
     place: "Stealth Startup"
     when: "Nov 2020 - Mar 2021"
-    details: "I was given an opportunity to practice ethical security research in a local startup."
+    details: "I had an opportunity to practice the following ethical security research projects at a local startup."
     bullets:
       - |-
         **Fileless Execution Forensics on Windows**
