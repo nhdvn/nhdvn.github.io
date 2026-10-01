@@ -44,8 +44,8 @@
     --photo-w: 250px;
     /* Trim off the edges of the portrait. The figure shrinks by what you crop. */
     --photo-crop-t: 20px;
-    --photo-crop-l: 10px;
-    --photo-crop-r: 10px;
+    --photo-crop-l: 15px;
+    --photo-crop-r: 15px;
     /* Visible width after the side crops; derived, do not set by hand. */
     --photo-vis: calc(var(--photo-w) - var(--photo-crop-l) - var(--photo-crop-r));
   }
@@ -570,7 +570,8 @@
 </main>
 
 <footer>
-  <p>© <span id="year">{{ site.time | date: '%Y' }}</span> {{ p.name }}. All rights reserved.</p>
+  {%- assign contact = p.links | where: 'type', 'email' | first -%}
+  <p>Copyright © <span id="year">{{ site.time | date: '%Y' }}</span> {{ p.name | escape }}{% if contact.url %} | {{ contact.url | escape }}{% endif %}. All rights reserved.</p>
 </footer>
 
 <script>
