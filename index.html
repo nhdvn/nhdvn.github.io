@@ -40,6 +40,14 @@
     --size: 100%;
     /* Height of the sticky top bar; measured by script below, this is the fallback. */
     --topbar-h: 60px;
+    /* Portrait width. Everything else follows from it; the image keeps its own ratio. */
+    --photo-w: 250px;
+    /* Trim off the edges of the portrait. The figure shrinks by what you crop. */
+    --photo-crop-t: 20px;
+    --photo-crop-l: 10px;
+    --photo-crop-r: 10px;
+    /* Visible width after the side crops; derived, do not set by hand. */
+    --photo-vis: calc(var(--photo-w) - var(--photo-crop-l) - var(--photo-crop-r));
   }
   :root[data-theme="light"] {
     --bg: #FFFFFF; --text: #37352F; --heading: #2B2A26; --muted: #6F6E69; --icon: #91918E;
@@ -132,8 +140,12 @@
   .section-intro p + p { margin-top: 0.85em; }
 
   .intro { display: flex; gap: 28px; align-items: flex-start; }
-  .photo { flex: none; width: 152px; margin: 0; }
-  .photo img { display: block; width: 152px; height: 152px; border-radius: 10px; object-fit: cover; background: var(--photo); }
+  .photo { flex: none; width: var(--photo-vis); margin: 0; }
+  /* Overflow hides the cropped strips; the negative margins slide the image under them. */
+  .photo-frame { overflow: hidden; border-radius: 10px; background: var(--photo); line-height: 0; }
+  .photo-frame img { display: block; width: var(--photo-w); max-width: none; height: auto;
+                     margin-top: calc(-1 * var(--photo-crop-t));
+                     margin-left: calc(-1 * var(--photo-crop-l)); }
   .photo figcaption { margin-top: 8px; font-size: 0.824rem; line-height: 1.4; color: var(--muted);
                       text-align: center; text-wrap: pretty; }
   .intro-text { flex: 1 1 auto; min-width: 0; }
@@ -263,12 +275,11 @@
     h1 { font-size: 2rem; }
     h2 { font-size: 1.353rem; }
     .intro { flex-direction: column; gap: 18px; }
-    .photo { width: 168px; margin-left: 55px; }
+    .photo { width: min(var(--photo-vis), 100%); margin-left: 0; }
     /* Stacked, so the caption is no longer squeezed beside the summary: let it size to
        its text and sit on one line instead of wrapping to the photo's width. */
     .photo figcaption { width: max-content; max-width: none;
                         margin-left: 50%; transform: translateX(-50%); }
-    .photo img { width: 168px; height: 168px; }
     .intro p { line-height: 1.6; }
     .pub { grid-template-columns: 18px minmax(0, 1fr); }
     .impl { grid-template-columns: 18px minmax(0, 1fr); }
@@ -338,7 +349,7 @@
     <h1>{{ p.name }}</h1>
     <div class="intro">
       <figure class="photo">
-        <img src="{{ p.photo | default: 'photo.jpg' }}" alt="Portrait of {{ p.name | escape }}" width="152" height="152">
+        <div class="photo-frame"><img src="{{ p.photo | default: 'photo.jpeg' }}" alt="Portrait of {{ p.name | escape }}" width="517" height="638"></div>
         {%- if p.photo_caption and p.photo_caption != '' %}
         <figcaption>{{ p.photo_caption | markdownify | remove: '<p>' | remove: '</p>' | strip }}</figcaption>
         {%- endif %}

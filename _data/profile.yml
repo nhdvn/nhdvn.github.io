@@ -21,7 +21,7 @@ author_name: "Hoang-Dung Nguyen"
 # One line used by search engines and link previews.
 description: "PhD Student @ Virginia Tech. Working on Private Information Retrieval, Oblivious RAM, and Searchable Encryption."
 
-photo: "photo.jpg"
+photo: "photo.jpeg"
 # Small line under the photo. Delete it and the line disappears.
 photo_caption: "My English name is **Thomas**"
 
@@ -37,7 +37,7 @@ summary: |-
   
   My research builds computer systems for knowlegde retrieval that 
   deliver privacy and security at scale. I design algorithms and perform cryptanalysis to
-  achieve simple protocols that are theoretically sound, concretely efficient and deployable.
+  achieve simple protocols that are theoretically sound, concretely efficient and practically deployable.
 
 # ---- Links (shown in this order; delete a line to hide it) ------------------
 # type: email | scholar | linkedin | github | dblp | orcid | website | cv
