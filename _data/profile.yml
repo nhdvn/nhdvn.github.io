@@ -227,10 +227,10 @@ industry:
       - |-
         **Reducing Manual Triage on Software and Network Vulnerabilities**
         
-        I developed two modules that (1) probed hundreds of internal and external subdomains for
+        I developed two modules that (1) probes hundreds of internal and external subdomains for
         HTTP status, routing paths, gateways, authentication and TLS exposure, and 
-        (2) monitored SCA/SAST results from pull requests
-        across hundreds of internal repos to issue tickets to designated teams. 
+        (2) processes security ticket lifecycle across hundreds of internal repos
+        by monitoring SCA/SAST results from pull requests.
 
   - role: "Security Research Intern"
     place: "Stealth Startup"

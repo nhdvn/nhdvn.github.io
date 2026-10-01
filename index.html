@@ -257,6 +257,10 @@
   .teaching th:nth-child(3), .teaching td:nth-child(3) { width: 96px; text-align: center; }
 
   footer { max-width: calc(var(--col) + 40px); margin: 56px auto 0; padding: 0 20px 64px; }
+  /* Source Serif draws the © mark noticeably small; nudge it back to the text size. */
+  /* Source Serif draws © small and raised. Scale it back up, drop it onto the baseline,
+     and zero its line-height so the enlarged box cannot grow the footer's line. */
+  .copy { font-size: 1.15em; line-height: 0; vertical-align: -0.06em; }
   footer p { margin: 0; padding-top: 14px; border-top: 1px solid var(--divider); font-size: 0.882rem; line-height: 1.5; color: var(--muted); }
 
   /* ---- phones ---- */
@@ -573,7 +577,7 @@
 
 <footer>
   {%- assign contact = p.links | where: 'type', 'email' | first -%}
-  <p>Copyright © <span id="year">{{ site.time | date: '%Y' }}</span> {{ p.name | escape }}{% if contact.url %} | {{ contact.url | escape }}{% endif %}. All rights reserved.</p>
+  <p><span class="copy">©</span> <span id="year">{{ site.time | date: '%Y' }}</span> {{ p.name | escape }}. All rights reserved.</p>
 </footer>
 
 <script>
