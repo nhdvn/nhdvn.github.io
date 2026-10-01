@@ -44,10 +44,12 @@
     --photo-w: 250px;
     /* Trim off the edges of the portrait. The figure shrinks by what you crop. */
     --photo-crop-t: 20px;
-    --photo-crop-l: 15px;
-    --photo-crop-r: 15px;
+    --photo-crop-l: 13px;
+    --photo-crop-r: 13px;
     /* Visible width after the side crops; derived, do not set by hand. */
     --photo-vis: calc(var(--photo-w) - var(--photo-crop-l) - var(--photo-crop-r));
+    /* Space between the photo and the summary beside it. */
+    --photo-gap: 20px;
   }
   :root[data-theme="light"] {
     --bg: #FFFFFF; --text: #37352F; --heading: #2B2A26; --muted: #6F6E69; --icon: #91918E;
@@ -139,7 +141,7 @@
   .section-intro p { margin: 0; line-height: 1.65; text-wrap: pretty; }
   .section-intro p + p { margin-top: 0.85em; }
 
-  .intro { display: flex; gap: 28px; align-items: flex-start; }
+  .intro { display: flex; gap: var(--photo-gap); align-items: flex-start; }
   .photo { flex: none; width: var(--photo-vis); margin: 0; }
   /* Overflow hides the cropped strips; the negative margins slide the image under them. */
   .photo-frame { overflow: hidden; border-radius: 10px; background: var(--photo); line-height: 0; }
