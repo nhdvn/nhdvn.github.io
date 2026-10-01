@@ -81,7 +81,7 @@ selected_research:
 
 # ---- Publications (newest first) --------------------------------------------
 # pdf / code / slides are optional: leave any out and its link disappears.
-publications:
+publication:
   - title: "Efficient Single-Server Online-Offline PIR without Periodic Preprocessing"                                  # (Markdown)
     authors: "Hoang-Dung Nguyen, Jorge Guajardo, Thang Hoang"
     venue: "S&P 2027"
@@ -110,6 +110,56 @@ publications:
     pdf: "https://dl.acm.org/doi/10.1145/3678890.3678905"
     code: "https://github.com/vt-asaplab/model-hetero-fl-attacks"
 
+# ---- Implementation ---------------------------------------------------------
+# One card per project. Every field except `name` is optional: leave one out and
+# that part of the card disappears. Tag colours: blue, purple, green, orange, pink, gray.
+implementation:
+  - name: "Escape Protocol"
+    repo: "vt-asaplab/Escape"
+    # text: ""
+    language: "C/C++"
+    tags:
+      - { name: "OO-PIR",  color: blue }
+      - { name: "AVX-512", color: gray }
+      - { name: "IFMA-52", color: gray }
+      - { name: "Linearly Homomorphic Encryption", color: gray }
+    links:
+      - { label: "Repository", url: "https://github.com/vt-asaplab/Escape" }
+      - { label: "Paper",      url: "https://eprint.iacr.org/2026/2033" }
+
+  - name: "Pirex Protocol"
+    repo: "vt-asaplab/pirex"
+    language: ["C/C++", "Rust"]
+    tags:
+      - { name: "OO-PIR", color: blue }
+      - { name: "Write-Only ORAM", color: orange }
+      - { name: "SECP256K1", color: gray }
+      - { name: "Discrete Logarithm Solver", color: gray }
+    links:
+      - { label: "Repository", url: "https://github.com/vt-asaplab/pirex" }
+      - { label: "Paper",      url: "https://eprint.iacr.org/2024/719" }
+
+  - name: "Fuzzy Extractor"
+    repo: "nhdvn/FuzzyExtractor"
+    language: "Python, Go"
+    tags:
+      - { name: "Fuzzy Cryptography", color: pink }
+      - { name: "Composable Digital Locker", color: pink }
+      - { name: "Min Entropy", color: gray }
+    links:
+      - { label: "Repository", url: "https://github.com/nhdvn/FuzzyExtractor" }
+
+  - name: "Threshold Signature"
+    repo: "nhdvn/multisig"
+    language: "Python"
+    tags:
+      - { name: "Elliptic Curve P-256", color: gray }
+      - { name: "Polynomial Commitment", color: gray }
+      - { name: "Lagrange Interpolation", color: gray }
+    links:
+      - { label: "Repository", url: "https://github.com/nhdvn/multisig" }
+
+
 # ---- Research experience (newest first) -------------------------------------
 # open: true shows the entry expanded when the page loads.
 research:
@@ -128,14 +178,19 @@ research:
     details: "I received early research guidance from Professor Thuc Nguyen on these undergraduate projects:"
     bullets:
       - |-
-        **Biometric Cryptosystem and Authentication via Fuzzy Extractor** [[PDF]](https://www.overleaf.com/read/sztkkvjqvzkd#78e1ce)
+        **Biometric Cryptosystem and Authentication via Fuzzy Extractor**
+        [[Report]](https://github.com/nhdvn/FuzzyExtractor/blob/main/THESIS_REPORT.pdf)
+        [[Slides]](https://github.com/nhdvn/FuzzyExtractor/blob/main/THESIS_SLIDE.pdf)
         
         My work proposes an authentication system that regenerates multiple independent, 
         high-entropy cryptographic keys on demand from a single noisy, low-entropy biometric source. 
         Neither the user keys nor biometrics are stored remotely. The server retains only non-sensitive helper data.
       
       - |-
-        **A Threshold Variant for MuSig Schnorr Multi-Signature Scheme** [[PDF]](https://github.com/nhdvn/multisig/blob/master/report_english.pdf)
+        **A Threshold Variant for MuSig Schnorr Multi-Signature Scheme**
+        [[Report]](https://github.com/nhdvn/multisig/blob/master/report_english.pdf)
+        [[Slides]](https://github.com/nhdvn/multisig/blob/master/slide.pdf)
+
         
         My work proposed a threshold variant of MuSig with distributed key generation, where
         hash-weighted shares prevent rogue-key attacks, while publicly verifiable polynomial

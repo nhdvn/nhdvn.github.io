@@ -90,7 +90,7 @@
 
   /* ---- top bar ---- */
   .topbar {
-    position: sticky; top: 0; z-index: 10; display: flex; align-items: center; gap: 14px;
+    position: fixed; top: 0; left: 0; right: 0; z-index: 10; display: flex; align-items: center; gap: 14px;
     min-height: 60px; padding: 0 16px 0 18px; background: var(--bg); border-bottom: 1px solid var(--divider);
     transition: background-color 200ms ease;
     /* Keep the bar on its own layer: without this mobile re-rasterises it when the URL bar
@@ -107,7 +107,7 @@
   .logo-path { stroke: var(--accent); }
   .logo-node { fill: var(--glyph-fill); stroke: var(--text); }
   .logo-hot  { fill: var(--accent); stroke: var(--accent); }
-  .site-nav { display: flex; gap: 2px; font-size: 0.941rem; }
+  .site-nav { display: flex; flex-wrap: wrap; gap: 2px; font-size: 0.941rem; }
   .site-nav a { padding: 6px 8px; border-radius: 4px; color: var(--muted); text-decoration: none; }
   .site-nav a:hover { color: var(--text); }
   .theme-toggle {
@@ -118,6 +118,9 @@
   :root[data-theme="light"] .icon-sun, :root[data-theme="dark"] .icon-moon { display: none; }
 
   /* ---- page column ---- */
+  /* The bar is fixed at every width, so the body always reserves exactly its measured
+     height. Content offset is then --topbar-h + 64px everywhere: no jump at a breakpoint. */
+  body { padding-top: var(--topbar-h); }
   main { max-width: calc(var(--col) + 40px); margin: 0 auto; padding: 64px 20px 0; }
   section, main { scroll-margin-top: calc(var(--topbar-h) + 22px); }
   h1 { margin: 0 0 22px; font-size: 2.588rem; line-height: 1.15; font-weight: 700; color: var(--heading); }
@@ -160,7 +163,7 @@
   .stories p { margin: 0; line-height: 1.65; text-wrap: pretty; }
   .stories a { font-weight: 600; color: var(--accent); }
 
-  /* ---- publications ---- */
+  /* ---- publication ---- */
   .pubs { border-top: 1px solid var(--divider); }
   .pub { display: grid; grid-template-columns: 18px minmax(0, 1fr) auto; column-gap: 10px; align-items: start;
          padding: 12px 4px; border-bottom: 1px solid var(--divider); }
@@ -183,6 +186,33 @@
   .pub-venue-full.gray { color: var(--gray-text); }
   .pub-rate { font-size: 0.882rem; line-height: 1.5; color: var(--heading); }
   .pub-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; padding-top: 2px; font-size: 0.882rem; }
+
+  /* ---- implementation (boxed rows) ---- */
+  .impls { display: flex; flex-direction: column; gap: 12px; }
+  .impl { display: grid; grid-template-columns: 18px minmax(0, 1fr) auto; column-gap: 10px; row-gap: 7px;
+          padding: 14px 16px; border: 1px solid var(--divider); border-radius: 10px; }
+  .impl-icon { grid-column: 1; grid-row: 1; width: 16px; height: 16px; margin-top: 3px; color: var(--icon); }
+  .impl-head { grid-column: 2; grid-row: 1; display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 9px; }
+  .impl-name { font-weight: 600; color: var(--heading); }
+  .impl-repo { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+               font-size: 0.824rem; color: var(--muted); }
+  /* Links sit top-right on wide screens even though they come last in the markup, so that
+     they fall to the bottom of the card by themselves once the grid drops to two columns. */
+  .impl-links { grid-column: 3; grid-row: 1; display: flex; flex-wrap: wrap; gap: 14px; font-size: 0.882rem; }
+  .impl-links a { color: var(--text); text-decoration: underline;
+                  text-decoration-thickness: 1px; text-underline-offset: 3px; }
+  .impl-links a:hover { color: var(--accent); }
+  .impl-text { grid-column: 2 / -1; margin: 0; line-height: 1.6; text-wrap: pretty; }
+  .impl-meta { grid-column: 2 / -1; display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; }
+  .impl-lang { display: inline-flex; align-items: center; gap: 6px; font-size: 0.882rem; color: var(--muted); }
+  .impl-lang::before { content: ""; width: 9px; height: 9px; border-radius: 50%; background: var(--accent); }
+  /* Per-language dot colours; anything not listed keeps the accent. */
+  .impl-lang.lang-python::before { background: var(--purple-text); }
+  .impl-lang.lang-c::before,
+  .impl-lang.lang-cpp::before,
+  .impl-lang.lang-c-cpp::before,
+  .impl-lang.lang-go::before { background: var(--blue-text); }
+  .impl-lang.lang-rust::before { background: var(--orange-text); }
 
   /* ---- open/close entries (research + industry) ---- */
   .entry summary {
@@ -216,14 +246,20 @@
   footer p { margin: 0; padding-top: 14px; border-top: 1px solid var(--divider); font-size: 0.882rem; line-height: 1.5; color: var(--muted); }
 
   /* ---- phones ---- */
-  @media (max-width: 640px) {
-    body { font-size: 0.971rem; }
+  /* Six nav links plus the name and toggle need ~860px. Below that the bar wraps, and
+     the nav is forced onto its own full-width row so the toggle never drops instead. */
+  @media (max-width: 980px) {
+    /* --topbar-h must match the wrapped bar here too, or body reserves 60px for a ~92px
+       bar and the content slides underneath it until the script catches up. */
     :root { --topbar-h: 92px; }
-    .topbar { flex-wrap: wrap; row-gap: 4px; padding: 9px 12px 8px 10px; }
-    .brand svg { width: 32px; height: 27px; }
+    /* Horizontal padding matches the base rule exactly, so the logo and the toggle do not
+       shift sideways when the bar wraps. Only the vertical padding changes. */
+    .topbar { flex-wrap: wrap; row-gap: 4px; padding: 9px 16px 8px 18px; }
     .site-nav { order: 3; width: 100%; flex-wrap: wrap; font-size: 0.824rem; }
     .site-nav a { padding: 6px 7px; }
-    main { padding-top: 32px; }
+  }
+  @media (max-width: 640px) {
+    body { font-size: 0.971rem; }
     h1 { font-size: 2rem; }
     h2 { font-size: 1.353rem; }
     .intro { flex-direction: column; gap: 18px; }
@@ -235,6 +271,8 @@
     .photo img { width: 168px; height: 168px; }
     .intro p { line-height: 1.6; }
     .pub { grid-template-columns: 18px minmax(0, 1fr); }
+    .impl { grid-template-columns: 18px minmax(0, 1fr); }
+    .impl-links { grid-column: 2; grid-row: auto; }
     .pub-meta { grid-column: 2; padding-top: 6px; }
     .entry summary { grid-template-columns: 24px minmax(0, 1fr); align-items: start; }
     .tri { height: 27px; }
@@ -244,8 +282,7 @@
     .teaching th:nth-child(3), .teaching td:nth-child(3) { width: 68px; }
     /* Sticky gets re-stuck against a layout viewport that moves while the URL bar animates,
        which is what makes the bar blink. Fixed is pinned by the compositor instead. */
-    .topbar { position: fixed; top: 0; left: 0; right: 0; transition: none; }
-    body { padding-top: var(--topbar-h); }
+    .topbar { transition: none; }
   }
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
@@ -273,8 +310,11 @@
   </a>
   <nav class="site-nav" aria-label="Sections">
     <a href="#head">Home</a>
-    {%- if p.publications and p.publications.size > 0 %}
-    <a href="#publications">Publication</a>
+    {%- if p.publication and p.publication.size > 0 %}
+    <a href="#publication">Publication</a>
+    {%- endif %}
+    {%- if p.implementation and p.implementation.size > 0 %}
+    <a href="#implementation">Implementation</a>
     {%- endif %}
     {%- if p.research and p.research.size > 0 %}
     <a href="#research">Research</a>
@@ -363,13 +403,13 @@
   </section>
   {%- endif %}
 
-  {%- if p.publications and p.publications.size > 0 %}
+  {%- if p.publication and p.publication.size > 0 %}
   {%- assign me = p.author_name | default: p.name %}
   {%- capture me_html %}<span class="me">{{ me }}</span>{% endcapture %}
-  <section class="section" id="publications">
+  <section class="section" id="publication">
     <h2>Publication</h2>
     <div class="pubs">
-      {%- for pub in p.publications %}
+      {%- for pub in p.publication %}
       <article class="pub">
         <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" aria-hidden="true"><path d="M4 1.8h5.2L12.5 5v9.2H4z"/><path d="M9 1.8V5h3.5"/><path d="M6.1 5.62h1.1M6.1 8.1h4.3M6.1 10.58h4.3" stroke-width="1.1" stroke-linecap="round"/></svg>
         <div>
@@ -392,7 +432,7 @@
           <span class="tag {{ pub.color | default: 'gray' }}">{{ pub.venue | escape }}</span>
           {%- endif %}
           {%- if pub.pdf %}
-          <a href="{{ pub.pdf }}">PDF</a>
+          <a href="{{ pub.pdf }}">Paper</a>
           {%- endif %}
           {%- if pub.code %}
           <a href="{{ pub.code }}">Code</a>
@@ -401,6 +441,42 @@
           <a href="{{ pub.slides }}">Slides</a>
           {%- endif %}
         </div>
+      </article>
+      {%- endfor %}
+    </div>
+  </section>
+  {%- endif %}
+
+  {%- if p.implementation and p.implementation.size > 0 %}
+  <section class="section" id="implementation">
+    <h2>Implementation</h2>
+    <div class="impls">
+      {%- for im in p.implementation %}
+      <article class="impl">
+        <svg class="impl-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="3" width="11" height="8.5" rx="1.2"/><path d="M6 13.5h4"/></svg>
+        <div class="impl-head">
+          <span class="impl-name">{{ im.name | markdownify | remove: '<p>' | remove: '</p>' | strip }}</span>
+          {%- if im.repo %}<span class="impl-repo">{{ im.repo | escape }}</span>{% endif %}
+        </div>
+        {%- if im.text %}
+        <p class="impl-text">{{ im.text | markdownify | remove: '<p>' | remove: '</p>' | strip }}</p>
+        {%- endif %}
+        {%- if im.language or im.tags %}
+        <div class="impl-meta">
+          {%- if im.language %}
+          {%- assign langs = im.language -%}
+          {%- if langs.first == nil %}{% assign langs = im.language | split: ', ' %}{% endif -%}
+          {%- for lg in langs %}{%- assign lgslug = lg | downcase | replace: '++', 'pp' | replace: '#', 'sharp' | replace: '/', '-' | replace: ' ', '-' -%}
+          <span class="impl-lang lang-{{ lgslug }}">{{ lg | escape }}</span>{% endfor %}
+          {%- endif %}
+          {%- for t in im.tags %}<span class="tag {{ t.color | default: 'gray' }}">{{ t.name | escape }}</span>{% endfor %}
+        </div>
+        {%- endif %}
+        {%- if im.links and im.links.size > 0 %}
+        <div class="impl-links">
+          {%- for l in im.links %}<a href="{{ l.url }}">{{ l.label | escape }}</a>{% endfor %}
+        </div>
+        {%- endif %}
       </article>
       {%- endfor %}
     </div>
