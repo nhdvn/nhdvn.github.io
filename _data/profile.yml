@@ -189,7 +189,8 @@ research:
         
         My work proposes an authentication system that regenerates multiple independent, 
         high-entropy cryptographic keys on demand from a single noisy, low-entropy biometric source. 
-        Neither the user keys nor biometrics are stored remotely. The server retains only non-sensitive helper data.
+        It requires no persistent storage for user keys or biometrics.
+        The server retains only non-sensitive helper data.
       
       - |-
         **A Threshold Variant for MuSig Schnorr Multi-Signature Scheme**
