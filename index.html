@@ -242,7 +242,9 @@
   .entry[open] > summary .tri { transform: rotate(90deg); }
   .entry-title b { font-weight: 600; color: var(--heading); }
   .entry-title .place { color: var(--muted); }
-  .when { padding-left: 16px; font-size: 0.882rem; color: var(--muted); white-space: nowrap; }
+  /* padding-right keeps the date clear of the hover box edge; the summary itself only
+     has 2px of horizontal padding, so without this the text touches it. */
+  .when { padding-left: 16px; padding-right: 10px; font-size: 0.882rem; color: var(--muted); white-space: nowrap; }
   .entry-body { padding: 0 0 12px 28px; }
   .entry-body p { margin: 0; padding: 2px; text-wrap: pretty; }
   .entry-body ul { margin: 4px 0 0; padding-left: 24px; }
@@ -293,7 +295,7 @@
     .pub-meta { grid-column: 2; padding-top: 6px; }
     .entry summary { grid-template-columns: 24px minmax(0, 1fr); align-items: start; }
     .tri { height: 27px; }
-    .when { grid-column: 2; padding-left: 0; }
+    .when { grid-column: 2; padding-left: 0; padding-right: 0; }
     .teaching { font-size: 0.882rem; }
     .teaching th:nth-child(2), .teaching td:nth-child(2) { width: 110px; }
     .teaching th:nth-child(3), .teaching td:nth-child(3) { width: 68px; }

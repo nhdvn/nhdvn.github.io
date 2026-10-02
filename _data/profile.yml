@@ -64,19 +64,24 @@ selected_research:
     link: "https://eprint.iacr.org/2026/2033"
     text: >-                                               # (Markdown)
       is a new Private Information Retrieval protocol for single-server
-      setting that achieves constant response bandwidth cost while
-      concretely using a minimal (sublinear) amount of 
-      streamlined, hardware-friendly cryptographic operations
-      based on plain Learning With Errors.
+      setting that achieves constant response and uses significantly fewer (sublinear) amount of 
+      hardware-friendly cryptographic operations from plain Learning With Errors. 
+      My work fundamentally eliminates
+      the whole periodic hint table rebuild phase in the single-server online-offline 
+      paradigm and achieves per-hint refresh on demand without the periodic linear overhead
+      of Fully Homomorphic Encryption or database streaming.
 
   - name: "Pirex (PETS 2025)"
     link: "https://eprint.iacr.org/2024/719"
     text: >-                                               # (Markdown)
       is a two-server Private Information Retrieval protocol with sublinear
       server complexity inherited from the online-offline preprocessing 
-      paradigm. My work reduces the response bandwidth overhead of prior approaches 
-      from sublinear to constant, while maintaining security without requiring 
-      multiple parallel executions of the protocol.
+      paradigm. My work achieves constant response bandwidth
+      without relying on the sublinear bandwidth or multiple parallel protocol executions
+      of prior approaches for security. Its extended protocol 
+      [Pirex+](https://eprint.iacr.org/2024/719) further reduces the client offline hint storage
+      cost by offloading hint entries and their refresh operations to the server via oblivious
+      reads and writes.
 
 
 # ---- Publications (newest first) --------------------------------------------
