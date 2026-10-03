@@ -2,9 +2,8 @@
 #  Your homepage content. Everything on the page is read from this one file.
 #
 #  How to update: edit this file on GitHub (or locally), commit, and push.
-#  GitHub rebuilds the site in about a minute. index.html never needs touching.
+#  GitHub rebuilds the site in about a minute.
 #
-#  Rules of thumb
 #   - Keep text inside "double quotes". Values that start with [ or contain
 #     a colon break YAML without them.
 #   - Text fields marked (Markdown) accept **bold**, *italic* and
