@@ -10,7 +10,7 @@
 #   - Text fields marked (Markdown) accept **bold**, *italic* and
 #     [link text](https://example.com).
 #   - A list that is left empty ( [] ) hides its whole section and its menu link.
-#   - Tag colours: blue, purple, green, orange, pink, gray.
+#   - Tag colours: blue, purple, green, orange, olive, teal, red, pink, gray.
 # =============================================================================
 
 name: "Hoang-Dung Nguyen"
@@ -38,6 +38,7 @@ summary: |-
   My research builds computer systems for knowlegde retrieval that 
   deliver privacy and security at scale. I design algorithm and conduct cryptanalysis toward
   simple protocols that are theoretically sound, concretely efficient and practically deployable.
+  For research impact, visit my publication and implementation details.
 
 # ---- Links (shown in this order; delete a line to hide it) ------------------
 # type: email | scholar | linkedin | github | dblp | orcid | website | cv
@@ -51,11 +52,14 @@ links:
 
 # ---- Research interests -----------------------------------------------------
 interests:
-  - { name: "Private Information Retrieval", color: blue }
-  - { name: "Oblivious RAM",                 color: purple }
+  - { name: "Private Information Retrieval (PIR)", color: blue }
+  - { name: "Oblivious RAM (ORAM)",                color: purple }
   - { name: "Searchable Encryption",         color: green }
   - { name: "Knowledge Retrieval",           color: orange }
-  - { name: "Fuzzy Cryptography",            color: pink }
+  - { name: "Fuzzy Cryptography",            color: teal }
+  - { name: "Distributed Computation",       color: red }
+  - { name: "Public-Key Cryptography",       color: olive }
+  - { name: "Arithmetic Optimization",       color: pink }
 
 # ---- Selected research ------------------------------------------------------
 # Each item reads as: <name, as a link> <text>
@@ -63,24 +67,23 @@ selected_research:
   - name: "Escape (S&P 2027)"
     link: "https://eprint.iacr.org/2026/2033"
     text: >-                                               # (Markdown)
-      is a new Private Information Retrieval protocol for single-server
-      setting that achieves constant response and uses significantly fewer (sublinear) amount of 
-      hardware-friendly cryptographic operations from plain Learning With Errors. 
-      My work fundamentally eliminates
-      the whole periodic hint table rebuild phase in the single-server online-offline 
-      paradigm and achieves per-hint refresh on demand without the periodic linear overhead
-      of Fully Homomorphic Encryption or database streaming.
+      is a new single-server PIR that achieves 
+      constant response and uses only sublinear, hardware-friendly cryptographic 
+      operations from plain Learning With Errors. My work fundamentally eliminates 
+      the periodic linear cost of Fully Homomorphic Encryption or database streaming
+      for private hint table rebuild in prior single-server online-offline paradigm,
+      achieving per-hint refresh on demand. 
 
   - name: "Pirex (PETS 2025)"
     link: "https://eprint.iacr.org/2024/719"
     text: >-                                               # (Markdown)
-      is a two-server Private Information Retrieval protocol with sublinear
-      server complexity inherited from the online-offline preprocessing 
+      is a two-server PIR with sublinear
+      server complexity inherited from the online-offline 
       paradigm. My work achieves constant response bandwidth
-      without relying on the sublinear bandwidth or multiple parallel protocol executions
-      of prior approaches for security. Its extended protocol 
-      [Pirex+](https://eprint.iacr.org/2024/719) further reduces the client offline hint storage
-      cost by offloading hint entries and their refresh operations to the server via oblivious
+      without the sublinear bandwidth or multiple parallel executions
+      that prior approaches require for security. Its extension 
+      [Pirex+](https://eprint.iacr.org/2024/719) further reduces client hint storage
+      by offloading hint entries and their refreshes to the servers via oblivious
       reads and writes.
 
 
@@ -117,29 +120,39 @@ publication:
 
 # ---- Implementation ---------------------------------------------------------
 # One card per project. Every field except `name` is optional: leave one out and
-# that part of the card disappears. Tag colours: blue, purple, green, orange, pink, gray.
+# that part of the card disappears. Tag colours: blue, purple, green, orange, olive, teal, red, pink, gray.
 implementation:
   - name: "Escape Protocol"
     repo: "vt-asaplab/Escape"
-    # text: ""
+    text: >-
+      Measurement on TiB-scale databases (1 - 64 TiB) with 8 - 64 KiB entries.
+      Against prior OO-PIR, Escape reduces query time up to 56&times;
+      and bandwidth cost up to 420&times;.
+      Against lattice-based PIR, Escape reduces query time from 190&times; to 1575&times;
+      and server time up to 1912&times;.
     language: "C/C++"
     tags:
       - { name: "OO-PIR",  color: blue }
-      - { name: "AVX-512", color: gray }
-      - { name: "IFMA-52", color: gray }
-      - { name: "Linearly Homomorphic Encryption", color: gray }
+      - { name: "Learning With Errors", color: olive }
+      - { name: "IFMA-52", color: pink }
+      - { name: "Montgomery Reduction", color: pink }
     links:
       - { label: "Repository", url: "https://github.com/vt-asaplab/Escape" }
       - { label: "Paper",      url: "https://eprint.iacr.org/2026/2033" }
 
   - name: "Pirex Protocol"
     repo: "vt-asaplab/pirex"
+    text: >-
+      Measurement on databases from 1 GiB to 1 TiB with 4 - 256 KiB entries.
+      Against prior OO-PIR, Pirex reduces query time from 165&times; to 728&times;
+      and bandwidth cost from 65&times; to 910&times;.
+      Regarding client storage, Pirex+ reduces the cost from four to six orders of magnitude.
     language: ["C/C++", "Rust"]
     tags:
       - { name: "OO-PIR", color: blue }
-      - { name: "Write-Only ORAM", color: orange }
-      - { name: "SECP256K1", color: gray }
-      - { name: "Discrete Logarithm Solver", color: gray }
+      - { name: "Write-Only ORAM", color: purple }
+      - { name: "SECP256K1", color: olive }
+      - { name: "Exponential ElGamal", color: olive }
     links:
       - { label: "Repository", url: "https://github.com/vt-asaplab/pirex" }
       - { label: "Paper",      url: "https://eprint.iacr.org/2024/719" }
@@ -147,9 +160,14 @@ implementation:
   - name: "Fuzzy Extractor"
     repo: "nhdvn/FuzzyExtractor"
     language: "Python, Go"
+    text: >-
+      Experiment on [DARPA TIMIT](https://ui.adsabs.harvard.edu/abs/1993STIN...9327403G/abstract) 
+      speech dataset. The system produces 128-bit cryptographic secrets for authentication
+      with False Acceptance Rate 0.02%. The underlying Composable Digital Locker achieves 96-bit 
+      negligible error in reproducing the secrets from an 80-bit low-entropy input.
     tags:
-      - { name: "Fuzzy Cryptography", color: pink }
-      - { name: "Composable Digital Locker", color: pink }
+      - { name: "Fuzzy Cryptography", color: teal }
+      - { name: "Composable Digital Locker", color: teal }
       - { name: "Min Entropy", color: gray }
     links:
       - { label: "Repository", url: "https://github.com/nhdvn/FuzzyExtractor" }
@@ -158,9 +176,9 @@ implementation:
     repo: "nhdvn/multisig"
     language: "Python"
     tags:
-      - { name: "Elliptic Curve P-256", color: gray }
-      - { name: "Polynomial Commitment", color: gray }
-      - { name: "Lagrange Interpolation", color: gray }
+      - { name: "Elliptic Curve P-256", color: olive }
+      - { name: "Polynomial Commitment", color: red }
+      - { name: "Lagrange Interpolation", color: red }
     links:
       - { label: "Repository", url: "https://github.com/nhdvn/multisig" }
 
@@ -197,7 +215,6 @@ research:
         [[Report]](https://github.com/nhdvn/multisig/blob/master/report_english.pdf)
         [[Slides]](https://github.com/nhdvn/multisig/blob/master/slide.pdf)
 
-        
         My work proposed a threshold variant of MuSig with distributed key generation, where
         hash-weighted shares prevent rogue-key attacks, while publicly verifiable polynomial
         commitments over ECC P-256 yield one aggregated group key and a constant-size signature

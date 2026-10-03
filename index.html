@@ -55,22 +55,26 @@
     --bg: #FFFFFF; --text: #37352F; --heading: #2B2A26; --muted: #6F6E69; --icon: #91918E;
     --divider: #E9E9E7; --table-head: #F7F6F3; --photo: #F1F1EF; --link-line: rgba(55, 53, 47, 0.4);
     --accent: #337EA9; --glyph-fill: #FFFFFF; --sel: rgba(51, 126, 169, 0.25);
-    --blue-bg: #D3E5EF; --blue-fg: #183347; --purple-bg: #E8DEEE; --purple-fg: #412454;
-    --green-bg: #DBEDDB; --green-fg: #1C3829; --orange-bg: #FADEC9; --orange-fg: #49290E;
+    --blue-bg: #D4DDED; --blue-fg: #182A49; --purple-bg: #DFCEE8; --purple-fg: #412454;
+    --green-bg: #D4EDDC; --green-fg: #184928; --orange-bg: #FADEC9; --orange-fg: #49290E;
+    --teal-bg: #D6F2F5; --teal-fg: #1C464A; --olive-bg: #E2E9D3; --olive-fg: #37431E; --red-bg: #F0C1C3; --red-fg: #411617;
     --pink-bg: #F5E0E9; --pink-fg: #4C2337; --gray-bg: #E3E2E0; --gray-fg: #32302C;
     /* Text-only versions: the --*-fg above are near-black by design, meant for the tag tint. */
-    --blue-text: #2A6F97; --purple-text: #6B3FA0; --green-text: #2E7D4F;
-    --orange-text: #A85A17; --pink-text: #A33B68; --gray-text: #5A5854;
+    --blue-text: #25519D; --purple-text: #6B3FA0; --green-text: #267340;
+    --orange-text: #A85A17; --teal-text: #157984; --olive-text: #56741B; --red-text: #75151B;
+    --pink-text: #A33B68; --gray-text: #5A5854;
   }
   :root[data-theme="dark"] {
     --bg: #191919; --text: #D9D9D6; --heading: #EDEDEB; --muted: #9B9A97; --icon: #8A8A87;
     --divider: #2F2F2F; --table-head: #202020; --photo: #252525; --link-line: rgba(255, 255, 255, 0.35);
     --accent: #529CCA; --glyph-fill: #191919; --sel: rgba(82, 156, 202, 0.32);
-    --blue-bg: #1F3A52; --blue-fg: #B7D4EA; --purple-bg: #3A2B4A; --purple-fg: #D6C3E6;
-    --green-bg: #22402F; --green-fg: #B9DDC6; --orange-bg: #4A3120; --orange-fg: #F1C9A6;
-    --pink-bg: #4A2A3A; --pink-fg: #EBC2D4; --gray-bg: #333333; --gray-fg: #D0D0D0;
-    --blue-text: #B7D4EA; --purple-text: #D6C3E6; --green-text: #B9DDC6;
-    --orange-text: #F1C9A6; --pink-text: #EBC2D4; --gray-text: #D0D0D0;
+    --blue-bg: #242F42; --blue-fg: #B7C6E1; --purple-bg: #2C1D35; --purple-fg: #D6C3E6;
+    --green-bg: #24422E; --green-fg: #B7E1C5; --orange-bg: #4A3120; --orange-fg: #F1C9A6;
+    --teal-bg: #25474B; --teal-fg: #AEDBE0; --olive-bg: #343C25; --olive-fg: #DAE2CA; --red-bg: #361C1D; --red-fg: #D49B9D;
+    --pink-bg: #553042; --pink-fg: #EBC2D4; --gray-bg: #333333; --gray-fg: #D0D0D0;
+    --blue-text: #B7C6E1; --purple-text: #D6C3E6; --green-text: #B7E1C5;
+    --orange-text: #F1C9A6; --teal-text: #AEDBE0; --olive-text: #DAE2CA; --red-text: #D49B9D;
+    --pink-text: #EBC2D4; --gray-text: #D0D0D0;
   }
 
   *, *::before, *::after { box-sizing: border-box; }
@@ -163,13 +167,18 @@
 
   .interests { margin-top: 30px; }
   .interests h2 { margin: 0 0 10px; font-size: 0.882rem; line-height: 1.4; color: var(--muted); }
-  .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tags { display: flex; flex-wrap: wrap; gap: 7px; }
   .tag { display: inline-flex; align-items: center; height: 1.571em; padding: 0 7px; border-radius: 3px;
          font-size: 0.824rem; line-height: 1; white-space: nowrap; }
+  /* Interests only: publication venues and Implementation chips keep the base size. */
+  .tags .tag { font-size: 0.853rem; padding: 0 8px; }
   .tag.blue { background: var(--blue-bg); color: var(--blue-fg); }
   .tag.purple { background: var(--purple-bg); color: var(--purple-fg); }
   .tag.green { background: var(--green-bg); color: var(--green-fg); }
   .tag.orange { background: var(--orange-bg); color: var(--orange-fg); }
+  .tag.teal { background: var(--teal-bg); color: var(--teal-fg); }
+  .tag.olive { background: var(--olive-bg); color: var(--olive-fg); }
+  .tag.red { background: var(--red-bg); color: var(--red-fg); }
   .tag.pink { background: var(--pink-bg); color: var(--pink-fg); }
   .tag.gray { background: var(--gray-bg); color: var(--gray-fg); }
 
@@ -196,6 +205,9 @@
   .pub-venue-full.purple { color: var(--purple-text); }
   .pub-venue-full.green { color: var(--green-text); }
   .pub-venue-full.orange { color: var(--orange-text); }
+  .pub-venue-full.teal { color: var(--teal-text); }
+  .pub-venue-full.olive { color: var(--olive-text); }
+  .pub-venue-full.red { color: var(--red-text); }
   .pub-venue-full.pink { color: var(--pink-text); }
   .pub-venue-full.gray { color: var(--gray-text); }
   .pub-rate { font-size: 0.882rem; line-height: 1.5; color: var(--heading); }
@@ -204,7 +216,7 @@
   /* ---- implementation (boxed rows) ---- */
   .impls { display: flex; flex-direction: column; gap: 12px; }
   .impl { display: grid; grid-template-columns: 18px minmax(0, 1fr) auto; column-gap: 10px; row-gap: 7px;
-          padding: 14px 16px; border: 1px solid var(--divider); border-radius: 10px; }
+          padding: 14px 30px 14px 16px; border: 1px solid var(--divider); border-radius: 10px; }
   .impl-icon { grid-column: 1; grid-row: 1; width: 16px; height: 16px; margin-top: 3px; color: var(--icon); }
   .impl-head { grid-column: 2; grid-row: 1; display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 9px; }
   .impl-name { font-weight: 600; color: var(--heading); }
@@ -217,6 +229,8 @@
                   text-decoration-thickness: 1px; text-underline-offset: 3px; }
   .impl-links a:hover { color: var(--accent); }
   .impl-text { grid-column: 2 / -1; margin: 0; line-height: 1.6; text-wrap: pretty; }
+  /* The multiplication sign sits on the maths axis, which reads high next to digits. */
+  .mul { vertical-align: -0.1em; }
   .impl-meta { grid-column: 2 / -1; display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; }
   .impl-lang { display: inline-flex; align-items: center; gap: 6px; font-size: 0.882rem; color: var(--muted); }
   .impl-lang::before { content: ""; width: 9px; height: 9px; border-radius: 50%; background: var(--accent); }
@@ -478,7 +492,7 @@
           {%- if im.repo %}<span class="impl-repo">{{ im.repo | escape }}</span>{% endif %}
         </div>
         {%- if im.text %}
-        <p class="impl-text">{{ im.text | markdownify | remove: '<p>' | remove: '</p>' | strip }}</p>
+        <p class="impl-text">{{ im.text | markdownify | remove: '<p>' | remove: '</p>' | strip | replace: '×', '<span class="mul">×</span>' }}</p>
         {%- endif %}
         {%- if im.language or im.tags %}
         <div class="impl-meta">
