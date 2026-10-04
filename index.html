@@ -144,6 +144,8 @@
   .section-intro { margin: 0 0 16px; }
   .section-intro p { margin: 0; line-height: 1.65; text-wrap: pretty; }
   .section-intro p + p { margin-top: 0.85em; }
+  .ack p { margin: 0; line-height: 1.65; text-wrap: pretty; }
+  .ack p + p { margin-top: 0.85em; }
 
   .intro { display: flex; gap: var(--photo-gap); align-items: flex-start; }
   .photo { flex: none; width: var(--photo-vis); margin: 0; }
@@ -280,9 +282,9 @@
   footer p { margin: 0; padding-top: 14px; border-top: 1px solid var(--divider); font-size: 0.882rem; line-height: 1.5; color: var(--muted); }
 
   /* ---- phones ---- */
-  /* Six nav links plus the name and toggle need ~860px. Below that the bar wraps, and
+  /* Seven nav links plus the name and toggle need ~870px. Below that the bar wraps, and
      the nav is forced onto its own full-width row so the toggle never drops instead. */
-  @media (max-width: 980px) {
+  @media (max-width: 960px) {
     /* --topbar-h must match the wrapped bar here too, or body reserves 60px for a ~92px
        bar and the content slides underneath it until the script catches up. */
     :root { --topbar-h: 92px; }
@@ -357,6 +359,9 @@
     {%- endif %}
     {%- if p.industry and p.industry.size > 0 %}
     <a href="#industry">Industry</a>
+    {%- endif %}
+    {%- if p.acknowledgement and p.acknowledgement != '' %}
+    <a href="#acknowledgement">Acknowledge</a>
     {%- endif %}
   </nav>
   <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch to dark mode" title="Switch to dark mode">
@@ -586,6 +591,13 @@
       </div>
     </details>
     {%- endfor %}
+  </section>
+  {%- endif %}
+
+  {%- if p.acknowledgement and p.acknowledgement != '' %}
+  <section class="section" id="acknowledgement">
+    <h2>Acknowledgement</h2>
+    <div class="ack">{{ p.acknowledgement | markdownify }}</div>
   </section>
   {%- endif %}
 

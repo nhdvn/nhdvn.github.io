@@ -214,10 +214,10 @@ research:
         [[Report]](https://github.com/nhdvn/multisig/blob/master/report_english.pdf)
         [[Slides]](https://github.com/nhdvn/multisig/blob/master/slide.pdf)
 
-        My work proposed a threshold variant of MuSig with distributed key generation, where
-        hash-weighted shares prevent rogue-key attacks, while publicly verifiable polynomial
-        commitments over ECC P-256 yield one aggregated group key and a constant-size signature
-        with hidden signers.
+        My work proposes a threshold MuSig variant whose distributed key generation
+        is rogue-key resistant via hash-weighted secret shares and publicly verifiable
+        via polynomial commitments over NIST P-256, yielding one aggregate group key 
+        and constant-size signatures with hidden signers.
 
 # ---- Teaching experience ----------------------------------------------------
 #  teaching_intro is optional (Markdown). Delete it and the paragraph disappears.
@@ -279,3 +279,13 @@ industry:
         My work studied stack and heap corruption for ROP/JOP code-reuse attacks
         against OS hardening (ASLR, NX, StackGuard, PIE)
         and ELF linking constraints (PLT/GOT, RELRO, ASCII-Armor).
+
+# ---- Acknowledgement --------------------------------------------------------
+acknowledgement: |-
+  My research has never been solitary, and it has never been measured in milestones.
+  It has always been a winding journey, with challenges that seemed impossible to untangle,
+  and starting points that were too obscured to even imagine. I could only take small steps,
+  give what I had, and enjoy how it advanced.
+
+  I am grateful to the advisors, mentors, colleagues, friends and
+  family who have walked it with me.
