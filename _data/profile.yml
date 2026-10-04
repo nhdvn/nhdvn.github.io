@@ -124,11 +124,11 @@ implementation:
   - name: "Escape Protocol"
     repo: "vt-asaplab/Escape"
     text: >-
-      Measurement on TiB-scale databases (1 - 64 TiB) with 8 - 64 KiB entries.
-      Against prior OO-PIR, Escape reduces query time up to 56&times;
-      and bandwidth cost up to 420&times;.
-      Against lattice-based PIR, Escape reduces query time from 190&times; to 1575&times;
-      and server time up to 1912&times;.
+      Experiment on 1 - 64 TiB databases with 8 - 64 KiB entries.
+      Against previous OO-PIR, Escape achieves up to 56&times; lower latency
+      and up to 420&times; lower bandwidth. Against lattice-based PIR, 
+      Escape achieves 190&times; - 1575&times; lower latency
+      and up to 1912&times; lower server time. 
     language: "C/C++"
     tags:
       - { name: "OO-PIR",  color: blue }
@@ -142,10 +142,10 @@ implementation:
   - name: "Pirex Protocol"
     repo: "vt-asaplab/pirex"
     text: >-
-      Measurement on databases from 1 GiB to 1 TiB with 4 - 256 KiB entries.
-      Against prior OO-PIR, Pirex reduces query time from 165&times; to 728&times;
-      and bandwidth cost from 65&times; to 910&times;.
-      Regarding client storage, Pirex+ reduces the cost from four to six orders of magnitude.
+      Experiment on 1 GiB - 1 TiB databases with 4 - 256 KiB entries.
+      Against previous OO-PIR, Pirex achieves 165&times; - 728&times; lower latency and 
+      65&times; - 910&times; lower bandwidth.
+      As for client storage, Pirex+ reduces the cost from four to six orders of magnitude.
     language: ["C/C++", "Rust"]
     tags:
       - { name: "OO-PIR", color: blue }
@@ -163,7 +163,7 @@ implementation:
       Experiment on [DARPA TIMIT](https://ui.adsabs.harvard.edu/abs/1993STIN...9327403G/abstract) 
       speech dataset. The system produces 128-bit cryptographic secrets for authentication
       with False Acceptance Rate 0.02%. The underlying Composable Digital Locker achieves 96-bit 
-      negligible error in reproducing the secrets from an 80-bit low-entropy input.
+      negligible error in reproducing secrets from an 80-bit low-entropy sample.
     tags:
       - { name: "Fuzzy Cryptography", color: teal }
       - { name: "Composable Digital Locker", color: teal }
