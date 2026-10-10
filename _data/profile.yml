@@ -224,8 +224,8 @@ research:
 teaching_intro: >-
   I have served as a Graduate Teaching Assistant for the following 
   Computer Science courses at Virginia Tech, developing coursework materials, 
-  grading student submissions, and holding weekly office hours. In 2025,
-  I received the Outstanding GTA Award from Computer Science Department.
+  grading student submissions, and holding weekly office hours.
+  I received the Outstanding GTA Award from Computer Science Department in 2025.
 teaching:
   - { course: "[[CS 4264] Principle of Computer Security](https://people.cs.vt.edu/~ribbens/upc/courses/CS4264Proposal.pdf)",    term: "Spring 2023 - 2025", students: "~90" }
   - { course: "[[CS 4104] Data Structure & Algorithm Analysis](https://people.cs.vt.edu/~ribbens/upc/courses/CS4104Proposal.pdf)", term: "Fall 2024 - 2025", students: "~75" }
