@@ -38,7 +38,7 @@
     --font: 'Source Serif 4', Georgia, 'Times New Roman', serif;
     --col: 800px;
     --size: 100%;
-    /* Height of the sticky top bar; measured by script below, this is the fallback. */
+    /* Height of the fixed top bar; measured by the script below, this is the fallback. */
     --topbar-h: 60px;
     /* Portrait width. Everything else follows from it; the image keeps its own ratio. */
     --photo-w: 250px;
@@ -50,10 +50,13 @@
     --photo-vis: calc(var(--photo-w) - var(--photo-crop-l) - var(--photo-crop-r));
     /* Space between the photo and the summary beside it. */
     --photo-gap: 20px;
+    /* Theme swap. Every colour that changes with the theme must use this exact
+       duration and easing, or the parts of the bar arrive at different times. */
+    --fade: 200ms ease;
   }
   :root[data-theme="light"] {
     --bg: #FAF9F5; --text: #37352F; --heading: #2B2A26; --muted: #6F6E69; --icon: #91918E;
-    --divider: #E4E2DD; --table-head: #F0EFEC; --photo: #E9E8E3; --link-line: rgba(55, 53, 47, 0.4);
+    --divider: #E4E2DD; --table-head: #F0EFEC; --photo: #E9E8E3;
     --accent: #337EA9; --glyph-fill: #FAF9F5; --sel: rgba(51, 126, 169, 0.25);
     --blue-bg: #D4DDED; --blue-fg: #182A49; --purple-bg: #DFCEE8; --purple-fg: #412454;
     --green-bg: #D4EDDC; --green-fg: #184928; --orange-bg: #FADEC9; --orange-fg: #49290E;
@@ -66,7 +69,7 @@
   }
   :root[data-theme="dark"] {
     --bg: #232323; --text: #D9D9D6; --heading: #EDEDEB; --muted: #9B9A97; --icon: #8A8A87;
-    --divider: #393939; --table-head: #2A2A2A; --photo: #2F2F2F; --link-line: rgba(255, 255, 255, 0.35);
+    --divider: #393939; --table-head: #2A2A2A; --photo: #2F2F2F;
     --accent: #529CCA; --glyph-fill: #232323; --sel: rgba(82, 156, 202, 0.32);
     --blue-bg: #2A3548; --blue-fg: #B7C6E1; --purple-bg: #32233B; --purple-fg: #D6C3E6;
     --green-bg: #2A4834; --green-fg: #B7E1C5; --orange-bg: #503726; --orange-fg: #F1C9A6;
@@ -78,11 +81,13 @@
   }
 
   *, *::before, *::after { box-sizing: border-box; }
-  html { font-size: var(--size); scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  html { font-size: var(--size); scroll-behavior: smooth; -webkit-text-size-adjust: 100%;
+         background: var(--bg); transition: background-color var(--fade); }
+  /* The bar is fixed at every width, so the body always reserves exactly its measured
+     height. Content offset is then --topbar-h + 64px everywhere: no jump at a breakpoint. */
   body {
-    margin: 0; background: var(--bg); color: var(--text);
+    margin: 0; padding-top: var(--topbar-h); color: var(--text);
     font-family: var(--font); font-size: 1rem; line-height: 1.6;
-    transition: background-color 200ms ease, color 200ms ease;
   }
   a { color: var(--accent); text-decoration: none; }
   a:hover { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
@@ -106,7 +111,6 @@
   .topbar {
     position: fixed; top: 0; left: 0; right: 0; z-index: 10; display: flex; align-items: center; gap: 14px;
     min-height: 60px; padding: 0 16px 0 18px; background: var(--bg); border-bottom: 1px solid var(--divider);
-    transition: background-color 200ms ease;
     /* Keep the bar on its own layer: without this mobile re-rasterises it when the URL bar
        expands on an upward scroll, and it blinks out for a frame. */
     transform: translateZ(0);
@@ -132,9 +136,6 @@
   :root[data-theme="light"] .icon-sun, :root[data-theme="dark"] .icon-moon { display: none; }
 
   /* ---- page column ---- */
-  /* The bar is fixed at every width, so the body always reserves exactly its measured
-     height. Content offset is then --topbar-h + 64px everywhere: no jump at a breakpoint. */
-  body { padding-top: var(--topbar-h); }
   main { max-width: calc(var(--col) + 40px); margin: 0 auto; padding: 64px 20px 0; }
   section, main { scroll-margin-top: calc(var(--topbar-h) + 22px); }
   h1 { margin: 0 0 22px; font-size: 2.588rem; line-height: 1.15; font-weight: 700; color: var(--heading); }
@@ -142,10 +143,9 @@
   .section { margin-top: 48px; }
   /* Optional paragraph between a section heading and its content. */
   .section-intro { margin: 0 0 16px; }
-  .section-intro p { margin: 0; line-height: 1.65; text-wrap: pretty; }
-  .section-intro p + p { margin-top: 0.85em; }
-  .ack p { margin: 0; line-height: 1.65; text-wrap: pretty; }
-  .ack p + p { margin-top: 0.85em; }
+  /* One paragraph rhythm for every block of prose written in profile.yml. */
+  .section-intro p, .ack p, .intro p, .stories p { margin: 0; line-height: 1.65; text-wrap: pretty; }
+  .section-intro p + p, .ack p + p, .intro p + p { margin-top: 0.85em; }
 
   .intro { display: flex; gap: var(--photo-gap); align-items: flex-start; }
   .photo { flex: none; width: var(--photo-vis); margin: 0; }
@@ -157,8 +157,6 @@
   .photo figcaption { margin-top: 8px; font-size: 0.824rem; line-height: 1.4; color: var(--muted);
                       text-align: center; text-wrap: pretty; }
   .intro-text { flex: 1 1 auto; min-width: 0; }
-  .intro p { margin: 0; line-height: 1.65; text-wrap: pretty; }
-  .intro p + p { margin-top: 0.85em; }
   .intro strong { font-weight: 600; color: var(--heading); }
 
   .links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
@@ -185,7 +183,6 @@
   .tag.gray { background: var(--gray-bg); color: var(--gray-fg); }
 
   .stories { display: flex; flex-direction: column; gap: 16px; }
-  .stories p { margin: 0; line-height: 1.65; text-wrap: pretty; }
   .stories a { font-weight: 600; color: var(--accent); }
 
   /* ---- publication ---- */
@@ -275,7 +272,6 @@
   .teaching th:nth-child(3), .teaching td:nth-child(3) { width: 96px; text-align: center; }
 
   footer { max-width: calc(var(--col) + 40px); margin: 56px auto 0; padding: 0 20px 64px; }
-  /* Source Serif draws the © mark noticeably small; nudge it back to the text size. */
   /* Source Serif draws © small and raised. Scale it back up, drop it onto the baseline,
      and zero its line-height so the enlarged box cannot grow the footer's line. */
   .copy { font-size: 1.15em; line-height: 0; vertical-align: -0.06em; }
@@ -299,7 +295,7 @@
     h1 { font-size: 2rem; }
     h2 { font-size: 1.353rem; }
     .intro { flex-direction: column; gap: 18px; }
-    .photo { width: min(var(--photo-vis), 100%); margin-left: 0; }
+    .photo { width: min(var(--photo-vis), 100%); }
     /* Stacked, so the caption is no longer squeezed beside the summary: let it size to
        its text and sit on one line instead of wrapping to the photo's width. */
     .photo figcaption { width: max-content; max-width: none;
@@ -315,10 +311,19 @@
     .teaching { font-size: 0.882rem; }
     .teaching th:nth-child(2), .teaching td:nth-child(2) { width: 110px; }
     .teaching th:nth-child(3), .teaching td:nth-child(3) { width: 68px; }
-    /* Sticky gets re-stuck against a layout viewport that moves while the URL bar animates,
-       which is what makes the bar blink. Fixed is pinned by the compositor instead. */
-    .topbar { transition: none; }
   }
+  /* ---- theme swap ---- */
+  /* Every surface, border and glyph whose colour comes from a theme token fades on the
+     one clock in --fade. A token used outside this list snaps at frame zero while the
+     page is still fading, which is what reads as a glitch. Keep the list tight: each
+     selector here is an element the browser repaints on every frame of the swap. */
+  body, .topbar, .brand, .site-nav a, .theme-toggle, .skip,
+  .photo-frame, .links a, .pubs, .pub, .impl, .tag,
+  .teaching th, .teaching td, .entry summary, footer p {
+    transition: background-color var(--fade), border-color var(--fade), color var(--fade);
+  }
+  .brand svg * { transition: fill var(--fade), stroke var(--fade); }
+
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     *, *::before, *::after { transition: none !important; }
@@ -625,11 +630,25 @@
 
     label(root.getAttribute('data-theme'));
 
+    // localStorage.setItem is a synchronous write. Held in the click handler it lands in
+    // the same frame as the restyle of the whole document, so holding the toggle down
+    // drops frames and the fade stutters. Flip the theme now, persist after the paint.
+    var pending = null;
+    function persist(theme) {
+      if (pending !== null) { return void (pending = theme); }
+      pending = theme;
+      window.requestAnimationFrame(function () {
+        var t = pending;
+        pending = null;
+        try { localStorage.setItem('theme', t); } catch (e) {}
+      });
+    }
+
     btn.addEventListener('click', function () {
       var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
       root.setAttribute('data-theme', next);
       label(next);
-      try { localStorage.setItem('theme', next); } catch (e) {}
+      persist(next);
     });
 
     // Until a visitor picks a theme, follow their device setting as it changes.
@@ -643,15 +662,35 @@
       });
     }
 
-    // A link inside <summary> would also open/close the entry: keep the click to itself.
-    Array.prototype.forEach.call(document.querySelectorAll('.entry summary a'), function (a) {
-      a.addEventListener('click', function (ev) { ev.stopPropagation(); });
-    });
-
-    // Open links in a new tab, except in-page anchors and mail links.
+    // Every anchor on the page is handled in one pass: three separate passes walked the
+    // same nodes and bound overlapping listeners to the ones they shared.
     Array.prototype.forEach.call(document.querySelectorAll('a[href]'), function (a) {
       var href = a.getAttribute('href');
-      if (!href || href.charAt(0) === '#') return;
+      if (!href) return;
+
+      // A link inside <summary> would also open/close the entry: keep the click to itself.
+      if (a.closest('summary')) {
+        a.addEventListener('click', function (ev) { ev.stopPropagation(); });
+      }
+
+      // Safari re-runs its Reader-mode check on every hash navigation and flashes
+      // "Reader Available" in the address bar. Scroll without changing the URL, so the
+      // browser never sees a navigation. behavior is set explicitly rather than read from
+      // CSS so the animation runs even where prefers-reduced-motion would cancel it.
+      if (href.charAt(0) === '#') {
+        a.addEventListener('click', function (ev) {
+          var target = document.getElementById(href.slice(1));
+          if (!target) return;
+          ev.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          // A real hash jump moves focus; keep that for keyboard and screen-reader users.
+          if (!target.hasAttribute('tabindex')) { target.setAttribute('tabindex', '-1'); }
+          try { target.focus({ preventScroll: true }); } catch (e) { target.focus(); }
+        });
+        return;
+      }
+
+      // Everything leaving the page opens in a new tab, except mail and phone links.
       if (/^(mailto|tel):/i.test(href)) return;
       if (a.hasAttribute('target')) return;
       a.setAttribute('target', '_blank');
@@ -682,24 +721,6 @@
       else { window.addEventListener('resize', queueSync); }
       window.addEventListener('orientationchange', queueSync);
     }
-
-    // Safari re-runs its Reader-mode check on every hash navigation and flashes
-    // "Reader Available" in the address bar. Scroll without changing the URL, so the
-    // browser never sees a navigation. behavior is set explicitly rather than read from
-    // CSS so the animation runs even where prefers-reduced-motion would cancel it.
-    Array.prototype.forEach.call(document.querySelectorAll('a[href^="#"]'), function (a) {
-      a.addEventListener('click', function (ev) {
-        var id = a.getAttribute('href').slice(1);
-        if (!id) return;
-        var target = document.getElementById(id);
-        if (!target) return;
-        ev.preventDefault();
-        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        // A real hash jump moves focus; keep that for keyboard and screen-reader users.
-        if (!target.hasAttribute('tabindex')) { target.setAttribute('tabindex', '-1'); }
-        try { target.focus({ preventScroll: true }); } catch (e) { target.focus(); }
-      });
-    });
 
     document.getElementById('year').textContent = new Date().getFullYear();
   })();
