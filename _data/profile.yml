@@ -95,6 +95,10 @@ publication:
     venue_full: "IEEE Symposium on Security and Privacy 2027"
     color: purple
     acceptance: "(Acceptance Rate 15.8%)"
+    artifact:
+      - { name: "Available", badge: "badges/ieee-available.png" }
+      - { name: "Functional", badge: "badges/ieee-functional.png" }
+      - { name: "Reproduced", badge: "badges/ieee-reproduced.png" }
     pdf: "https://eprint.iacr.org/2026/2033"
     code: "https://github.com/vt-asaplab/Escape/"
 
@@ -104,7 +108,11 @@ publication:
     venue_full: "Privacy Enhancing Technologies Symposium 2025"
     color: green
     acceptance: "(Acceptance Rate 19%)"
-    pdf: "https://eprint.iacr.org/2024/719"
+    artifact:
+      - { name: "Available", badge: "badges/acm-available.png" }
+      - { name: "Functional", badge: "badges/acm-functional.png" }
+      - { name: "Reproduced", badge: "badges/acm-reproduced.png" }
+    pdf: "https://petsymposium.org/popets/2025/popets-2025-0095.php"
     code: "https://github.com/vt-asaplab/pirex"
     slides: "https://github.com/vt-asaplab/pirex/blob/main/PETS.pdf"
 
@@ -123,6 +131,7 @@ publication:
 implementation:
   - name: "Escape Protocol"
     repo: "vt-asaplab/Escape"
+    repo_link: "https://github.com/vt-asaplab/Escape"
     text: >-
       Experiment on 1 - 64 TiB databases with 8 - 64 KiB entries.
       Against previous OO-PIR, Escape achieves up to 56&times; lower latency
@@ -136,11 +145,11 @@ implementation:
       - { name: "IFMA-52", color: pink }
       - { name: "Montgomery Reduction", color: pink }
     links:
-      - { label: "Repository", url: "https://github.com/vt-asaplab/Escape" }
-      - { label: "Paper",      url: "https://eprint.iacr.org/2026/2033" }
+      - { label: "Paper",  url: "https://eprint.iacr.org/2026/2033" }
 
   - name: "Pirex Protocol"
     repo: "vt-asaplab/pirex"
+    repo_link: "https://github.com/vt-asaplab/pirex"
     text: >-
       Experiment on 1 GiB - 1 TiB databases with 4 - 256 KiB entries.
       Against previous OO-PIR, Pirex achieves 165&times; - 728&times; lower latency and 
@@ -153,11 +162,12 @@ implementation:
       - { name: "SECP256K1", color: olive }
       - { name: "Exponential ElGamal", color: olive }
     links:
-      - { label: "Repository", url: "https://github.com/vt-asaplab/pirex" }
-      - { label: "Paper",      url: "https://eprint.iacr.org/2024/719" }
+      - { label: "Paper",  url: "https://petsymposium.org/popets/2025/popets-2025-0095.php" }
+      - { label: "Slides", url: "https://github.com/vt-asaplab/pirex/blob/main/PETS.pdf" }
 
   - name: "Fuzzy Extractor"
     repo: "nhdvn/FuzzyExtractor"
+    repo_link: "https://github.com/nhdvn/FuzzyExtractor"
     language: "Python, Go"
     text: >-
       Experiment on [DARPA TIMIT](https://ui.adsabs.harvard.edu/abs/1993STIN...9327403G/abstract) 
@@ -169,17 +179,20 @@ implementation:
       - { name: "Composable Digital Locker", color: teal }
       - { name: "Min Entropy", color: gray }
     links:
-      - { label: "Repository", url: "https://github.com/nhdvn/FuzzyExtractor" }
+      - { label: "Report", url: "https://github.com/nhdvn/FuzzyExtractor/blob/main/THESIS_REPORT.pdf" }
+      - { label: "Slides", url: "https://github.com/nhdvn/FuzzyExtractor/blob/main/THESIS_SLIDE.pdf" }
 
   - name: "Threshold Signature"
     repo: "nhdvn/multisig"
+    repo_link: "https://github.com/nhdvn/multisig"
     language: "Python"
     tags:
       - { name: "Elliptic Curve P-256", color: olive }
       - { name: "Polynomial Commitment", color: red }
       - { name: "Lagrange Interpolation", color: red }
     links:
-      - { label: "Repository", url: "https://github.com/nhdvn/multisig" }
+      - { label: "Report", url: "https://github.com/nhdvn/multisig/blob/master/report_english.pdf" }
+      - { label: "Slides", url: "https://github.com/nhdvn/multisig/blob/master/slide.pdf" }
 
 
 # ---- Research experience (newest first) -------------------------------------

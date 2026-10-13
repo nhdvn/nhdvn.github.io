@@ -52,6 +52,8 @@
     --photo-vis: calc(var(--photo-w) - var(--photo-crop-l) - var(--photo-crop-r));
     /* Space between the photo and the summary beside it. */
     --photo-gap: 20px;
+    /* Height every artifact-evaluation badge is scaled to. */
+    --badge-h: 52px;
     /* How long the light/dark swap takes. One clock for every token; see ---- theme swap. */
     --fade: 200ms ease;
   }
@@ -215,7 +217,14 @@
   .pub-venue-full { font-size: 0.882rem; line-height: 1.5; font-weight: 600;
                     color: var(--chip-text, var(--muted)); }
   .pub-rate { font-size: 0.882rem; line-height: 1.5; color: var(--heading); }
+  .pub-artifact { margin-top: 5px; font-size: 0.882rem; line-height: 1.5; color: var(--muted); }
+  .pub-artifact-label { font-weight: 600; color: var(--heading); }
+  /* Right column: the tag and link row, with the artifact badges stacked under it. */
+  .pub-side { display: flex; flex-direction: column; align-items: flex-end; gap: 9px; }
   .pub-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; padding-top: 2px; font-size: 0.882rem; }
+  /* --badge-h is the one knob: the source art is untouched, only scaled to this height. */
+  .pub-badges { display: flex; flex-wrap: wrap; justify-content: flex-end; align-items: center; gap: 7px; }
+  .pub-badges img { display: block; height: var(--badge-h); width: auto; }
 
   /* ---- implementation (boxed rows) ---- */
   .impls { display: flex; flex-direction: column; gap: 12px; }
@@ -226,6 +235,8 @@
   .impl-name { font-weight: 600; color: var(--heading); }
   .impl-repo { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
                font-size: 0.824rem; color: var(--muted); }
+  a.impl-repo { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 2px; }
+  a.impl-repo:hover { color: var(--accent); }
   /* Links sit top-right on wide screens even though they come last in the markup, so that
      they fall to the bottom of the card by themselves once the grid drops to two columns. */
   .impl-links { grid-column: 3; grid-row: 1; display: flex; flex-wrap: wrap; gap: 14px; font-size: 0.882rem; }
@@ -305,7 +316,8 @@
     .pub { grid-template-columns: 18px minmax(0, 1fr); }
     .impl { grid-template-columns: 18px minmax(0, 1fr); }
     .impl-links { grid-column: 2; grid-row: auto; }
-    .pub-meta { grid-column: 2; padding-top: 6px; }
+    .pub-side { grid-column: 2; align-items: flex-start; padding-top: 6px; }
+    .pub-badges { justify-content: flex-start; }
     .entry summary { grid-template-columns: 24px minmax(0, 1fr); align-items: start; }
     .tri { height: 27px; }
     .when { grid-column: 2; padding-left: 0; padding-right: 0; }
@@ -486,7 +498,12 @@
             {%- if pub.acceptance and pub.acceptance != '' %}<span class="pub-rate">{{ pub.acceptance | escape }}</span>{% endif %}
           </span>
           {%- endif %}
+          {%- if pub.artifact and pub.artifact.size > 0 %}
+          {%- assign names = pub.artifact | map: 'name' | join: ', ' %}
+          <div class="pub-artifact"><span class="pub-artifact-label">Artifact:</span> {{ names | escape }}</div>
+          {%- endif %}
         </div>
+        <div class="pub-side">
         <div class="pub-meta">
           {%- if pub.venue %}
           <span class="tag {{ pub.color | default: 'gray' }}">{{ pub.venue | escape }}</span>
@@ -500,6 +517,14 @@
           {%- if pub.slides %}
           <a href="{{ pub.slides }}">Slides</a>
           {%- endif %}
+        </div>
+        {%- if pub.artifact and pub.artifact.size > 0 %}
+        <div class="pub-badges">
+          {%- for ab in pub.artifact %}
+          {%- if ab.badge %}<img src="{{ ab.badge }}" alt="Artifact {{ ab.name | escape }} badge" loading="lazy">{% endif %}
+          {%- endfor %}
+        </div>
+        {%- endif %}
         </div>
       </article>
       {%- endfor %}
@@ -516,7 +541,10 @@
         <svg class="impl-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="3" width="11" height="8.5" rx="1.2"/><path d="M6 13.5h4"/></svg>
         <div class="impl-head">
           <span class="impl-name">{{ im.name | markdownify | remove: '<p>' | remove: '</p>' | strip }}</span>
-          {%- if im.repo %}<span class="impl-repo">{{ im.repo | escape }}</span>{% endif %}
+          {%- if im.repo %}
+          {%- if im.repo_link and im.repo_link != '' %}<a class="impl-repo" href="{{ im.repo_link }}">{{ im.repo | escape }}</a>
+          {%- else %}<span class="impl-repo">{{ im.repo | escape }}</span>{% endif %}
+          {%- endif %}
         </div>
         {%- if im.text %}
         <p class="impl-text">{{ im.text | markdownify | remove: '<p>' | remove: '</p>' | strip | replace: '×', '<span class="mul">×</span>' }}</p>
