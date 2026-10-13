@@ -31,7 +31,9 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&display=swap">
+<!-- Roman only: italic is a second font file and nothing on the page is italic. If you ever
+     write *italic* in profile.yml, add `;1,8..60,400` back after the 700 instance. -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&display=swap">
 
 <style>
   :root {
@@ -50,39 +52,23 @@
     --photo-vis: calc(var(--photo-w) - var(--photo-crop-l) - var(--photo-crop-r));
     /* Space between the photo and the summary beside it. */
     --photo-gap: 20px;
-    /* Theme swap. Every colour that changes with the theme must use this exact
-       duration and easing, or the parts of the bar arrive at different times. */
+    /* How long the light/dark swap takes. One clock for every token; see ---- theme swap. */
     --fade: 200ms ease;
   }
   :root[data-theme="light"] {
     --bg: #FAF9F5; --text: #37352F; --heading: #2B2A26; --muted: #6F6E69; --icon: #91918E;
     --divider: #E4E2DD; --table-head: #F0EFEC; --photo: #E9E8E3;
-    --accent: #337EA9; --glyph-fill: #FAF9F5; --sel: rgba(51, 126, 169, 0.25);
-    --blue-bg: #D4DDED; --blue-fg: #182A49; --purple-bg: #DFCEE8; --purple-fg: #412454;
-    --green-bg: #D4EDDC; --green-fg: #184928; --orange-bg: #FADEC9; --orange-fg: #49290E;
-    --teal-bg: #D6F2F5; --teal-fg: #1C464A; --olive-bg: #E2E9D3; --olive-fg: #37431E; --red-bg: #F0C1C3; --red-fg: #411617;
-    --pink-bg: #F5E0E9; --pink-fg: #4C2337; --gray-bg: #E3E2E0; --gray-fg: #32302C;
-    /* Text-only versions: the --*-fg above are near-black by design, meant for the tag tint. */
-    --blue-text: #25519D; --purple-text: #6B3FA0; --green-text: #267340;
-    --orange-text: #A85A17; --teal-text: #157984; --olive-text: #56741B; --red-text: #75151B;
-    --pink-text: #A33B68; --gray-text: #5A5854;
+    --accent: #337EA9; --sel: rgba(51, 126, 169, 0.25);
   }
   :root[data-theme="dark"] {
     --bg: #232323; --text: #D9D9D6; --heading: #EDEDEB; --muted: #9B9A97; --icon: #8A8A87;
     --divider: #393939; --table-head: #2A2A2A; --photo: #2F2F2F;
-    --accent: #529CCA; --glyph-fill: #232323; --sel: rgba(82, 156, 202, 0.32);
-    --blue-bg: #2A3548; --blue-fg: #B7C6E1; --purple-bg: #32233B; --purple-fg: #D6C3E6;
-    --green-bg: #2A4834; --green-fg: #B7E1C5; --orange-bg: #503726; --orange-fg: #F1C9A6;
-    --teal-bg: #2B4D51; --teal-fg: #AEDBE0; --olive-bg: #3A422B; --olive-fg: #DAE2CA; --red-bg: #3C2223; --red-fg: #D49B9D;
-    --pink-bg: #5B3648; --pink-fg: #EBC2D4; --gray-bg: #3D3D3D; --gray-fg: #D0D0D0;
-    --blue-text: #B7C6E1; --purple-text: #D6C3E6; --green-text: #B7E1C5;
-    --orange-text: #F1C9A6; --teal-text: #AEDBE0; --olive-text: #DAE2CA; --red-text: #D49B9D;
-    --pink-text: #EBC2D4; --gray-text: #D0D0D0;
+    --accent: #529CCA; --sel: rgba(82, 156, 202, 0.32);
   }
 
   *, *::before, *::after { box-sizing: border-box; }
   html { font-size: var(--size); scroll-behavior: smooth; -webkit-text-size-adjust: 100%;
-         background: var(--bg); transition: background-color var(--fade); }
+         background: var(--bg); }
   /* The bar is fixed at every width, so the body always reserves exactly its measured
      height. Content offset is then --topbar-h + 64px everywhere: no jump at a breakpoint. */
   body {
@@ -123,7 +109,7 @@
   .brand svg { width: 35px; height: 30px; flex: none; }
   .logo-line { stroke: var(--text); }
   .logo-path { stroke: var(--accent); }
-  .logo-node { fill: var(--glyph-fill); stroke: var(--text); }
+  .logo-node { fill: var(--bg); stroke: var(--text); }
   .logo-hot  { fill: var(--accent); stroke: var(--accent); }
   .site-nav { display: flex; flex-wrap: wrap; gap: 2px; font-size: 0.941rem; }
   .site-nav a { padding: 6px 8px; border-radius: 4px; color: var(--muted); text-decoration: none; }
@@ -169,18 +155,45 @@
   .interests h2 { margin: 0 0 10px; font-size: 0.882rem; line-height: 1.4; color: var(--muted); }
   .tags { display: flex; flex-wrap: wrap; gap: 7px; }
   .tag { display: inline-flex; align-items: center; height: 1.571em; padding: 0 7px; border-radius: 3px;
-         font-size: 0.824rem; line-height: 1; white-space: nowrap; }
+         font-size: 0.824rem; line-height: 1; white-space: nowrap;
+         background: var(--chip-bg, var(--gray-bg)); color: var(--chip-fg, var(--gray-fg)); }
   /* Interests only: publication venues and Implementation chips keep the base size. */
   .tags .tag { font-size: 0.853rem; padding: 0 8px; }
-  .tag.blue { background: var(--blue-bg); color: var(--blue-fg); }
-  .tag.purple { background: var(--purple-bg); color: var(--purple-fg); }
-  .tag.green { background: var(--green-bg); color: var(--green-fg); }
-  .tag.orange { background: var(--orange-bg); color: var(--orange-fg); }
-  .tag.teal { background: var(--teal-bg); color: var(--teal-fg); }
-  .tag.olive { background: var(--olive-bg); color: var(--olive-fg); }
-  .tag.red { background: var(--red-bg); color: var(--red-fg); }
-  .tag.pink { background: var(--pink-bg); color: var(--pink-fg); }
-  .tag.gray { background: var(--gray-bg); color: var(--gray-fg); }
+  /* One rule per colour instead of one per colour per consumer. The class comes from
+     `color:` in profile.yml; a chip paints the pair, a venue name takes the text-only
+     version of the same hue. Adding a colour means adding one line here. */
+  /* The light and dark value of a hue sit on adjacent lines, which is how you compare
+     them when tuning one. These three are the whole chip palette: the 27
+     --blue-bg / --blue-fg / --blue-text style tokens they replace each existed to be
+     read by exactly one rule. --chip-fg is the near-black (or near-white) pair for a
+     filled chip; --chip-text is the same hue at text contrast, with no background. */
+  [data-theme="light"] .blue   { --chip-bg: #D4DDED; --chip-fg: #182A49; --chip-text: #25519D; }
+  [data-theme="dark"] .blue   { --chip-bg: #2A3548; --chip-fg: #B7C6E1; --chip-text: #B7C6E1; }
+
+  [data-theme="light"] .purple { --chip-bg: #DFCEE8; --chip-fg: #412454; --chip-text: #6B3FA0; }
+  [data-theme="dark"] .purple { --chip-bg: #32233B; --chip-fg: #D6C3E6; --chip-text: #D6C3E6; }
+
+  [data-theme="light"] .green  { --chip-bg: #D4EDDC; --chip-fg: #184928; --chip-text: #267340; }
+  [data-theme="dark"] .green  { --chip-bg: #2A4834; --chip-fg: #B7E1C5; --chip-text: #B7E1C5; }
+
+  [data-theme="light"] .orange { --chip-bg: #FADEC9; --chip-fg: #49290E; --chip-text: #A85A17; }
+  [data-theme="dark"] .orange { --chip-bg: #503726; --chip-fg: #F1C9A6; --chip-text: #F1C9A6; }
+
+  [data-theme="light"] .teal   { --chip-bg: #D6F2F5; --chip-fg: #1C464A; --chip-text: #157984; }
+  [data-theme="dark"] .teal   { --chip-bg: #2B4D51; --chip-fg: #AEDBE0; --chip-text: #AEDBE0; }
+
+  [data-theme="light"] .olive  { --chip-bg: #E2E9D3; --chip-fg: #37431E; --chip-text: #56741B; }
+  [data-theme="dark"] .olive  { --chip-bg: #3A422B; --chip-fg: #DAE2CA; --chip-text: #DAE2CA; }
+
+  [data-theme="light"] .red    { --chip-bg: #F0C1C3; --chip-fg: #411617; --chip-text: #75151B; }
+  [data-theme="dark"] .red    { --chip-bg: #3C2223; --chip-fg: #D49B9D; --chip-text: #D49B9D; }
+
+  [data-theme="light"] .pink   { --chip-bg: #F5E0E9; --chip-fg: #4C2337; --chip-text: #A33B68; }
+  [data-theme="dark"] .pink   { --chip-bg: #5B3648; --chip-fg: #EBC2D4; --chip-text: #EBC2D4; }
+
+  [data-theme="light"] .gray   { --chip-bg: #E3E2E0; --chip-fg: #32302C; --chip-text: #5A5854; }
+  [data-theme="dark"] .gray   { --chip-bg: #3D3D3D; --chip-fg: #D0D0D0; --chip-text: #D0D0D0; }
+
 
   .stories { display: flex; flex-direction: column; gap: 16px; }
   .stories a { font-weight: 600; color: var(--accent); }
@@ -199,16 +212,8 @@
      own line as soon as the two no longer fit, at any width, with no breakpoint. */
   .pub-venue { display: flex; flex-wrap: wrap; align-items: baseline; gap: 3px 9px; margin-top: 5px; }
   /* Same palette as the tag, but as text colour only: no background, no padding. */
-  .pub-venue-full { font-size: 0.882rem; line-height: 1.5; font-weight: 600; color: var(--muted); }
-  .pub-venue-full.blue { color: var(--blue-text); }
-  .pub-venue-full.purple { color: var(--purple-text); }
-  .pub-venue-full.green { color: var(--green-text); }
-  .pub-venue-full.orange { color: var(--orange-text); }
-  .pub-venue-full.teal { color: var(--teal-text); }
-  .pub-venue-full.olive { color: var(--olive-text); }
-  .pub-venue-full.red { color: var(--red-text); }
-  .pub-venue-full.pink { color: var(--pink-text); }
-  .pub-venue-full.gray { color: var(--gray-text); }
+  .pub-venue-full { font-size: 0.882rem; line-height: 1.5; font-weight: 600;
+                    color: var(--chip-text, var(--muted)); }
   .pub-rate { font-size: 0.882rem; line-height: 1.5; color: var(--heading); }
   .pub-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; padding-top: 2px; font-size: 0.882rem; }
 
@@ -232,14 +237,10 @@
   .mul { vertical-align: -0.1em; }
   .impl-meta { grid-column: 2 / -1; display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; }
   .impl-lang { display: inline-flex; align-items: center; gap: 6px; font-size: 0.882rem; color: var(--muted); }
-  .impl-lang::before { content: ""; width: 9px; height: 9px; border-radius: 50%; background: var(--accent); }
-  /* Per-language dot colours; anything not listed keeps the accent. */
-  .impl-lang.lang-python::before { background: var(--purple-text); }
-  .impl-lang.lang-c::before,
-  .impl-lang.lang-cpp::before,
-  .impl-lang.lang-c-cpp::before,
-  .impl-lang.lang-go::before { background: var(--blue-text); }
-  .impl-lang.lang-rust::before { background: var(--orange-text); }
+  .impl-lang::before { content: ""; width: 9px; height: 9px; border-radius: 50%; }
+  /* The dot takes its colour from the chip palette: the template puts a colour class on
+     the span, so a language needs no rule of its own here. Unmapped keeps the accent. */
+  .impl-lang::before { background: var(--chip-text, var(--accent)); }
 
   /* ---- open/close entries (research + industry) ---- */
   .entry summary {
@@ -313,16 +314,32 @@
     .teaching th:nth-child(3), .teaching td:nth-child(3) { width: 68px; }
   }
   /* ---- theme swap ---- */
-  /* Every surface, border and glyph whose colour comes from a theme token fades on the
-     one clock in --fade. A token used outside this list snaps at frame zero while the
-     page is still fading, which is what reads as a glitch. Keep the list tight: each
-     selector here is an element the browser repaints on every frame of the swap. */
-  body, .topbar, .brand, .site-nav a, .theme-toggle, .skip,
-  .photo-frame, .links a, .pubs, .pub, .impl, .tag,
-  .teaching th, .teaching td, .entry summary, footer p {
-    transition: background-color var(--fade), border-color var(--fade), color var(--fade);
+  /* The fade runs on the tokens themselves, not on the elements that read them. One
+     interpolation drives every var() below it, so nothing is composited and nothing can
+     desync: there is only ever one animation per element that owns a token. Transitioning
+     background-color on the elements instead made Chrome promote each one to its own
+     compositing layer. Unregistered custom properties cannot animate, so a browser
+     without @property (Firefox before 128) snaps the theme, which is a fine fallback. */
+  @property --bg { syntax: "<color>"; inherits: true; initial-value: #FAF9F5; }
+  @property --text { syntax: "<color>"; inherits: true; initial-value: #37352F; }
+  @property --heading { syntax: "<color>"; inherits: true; initial-value: #2B2A26; }
+  @property --muted { syntax: "<color>"; inherits: true; initial-value: #6F6E69; }
+  @property --icon { syntax: "<color>"; inherits: true; initial-value: #91918E; }
+  @property --divider { syntax: "<color>"; inherits: true; initial-value: #E4E2DD; }
+  @property --table-head { syntax: "<color>"; inherits: true; initial-value: #F0EFEC; }
+  @property --photo { syntax: "<color>"; inherits: true; initial-value: #E9E8E3; }
+  @property --accent { syntax: "<color>"; inherits: true; initial-value: #337EA9; }
+  @property --sel { syntax: "<color>"; inherits: true; initial-value: rgba(51, 126, 169, 0.25); }
+  @property --chip-bg { syntax: "<color>"; inherits: true; initial-value: #E3E2E0; }
+  @property --chip-fg { syntax: "<color>"; inherits: true; initial-value: #32302C; }
+  @property --chip-text { syntax: "<color>"; inherits: true; initial-value: #5A5854; }
+
+  :root, .tag, .pub-venue-full, .impl-lang {
+    transition: --bg var(--fade), --text var(--fade), --heading var(--fade),
+      --muted var(--fade), --icon var(--fade), --divider var(--fade), --table-head var(--fade),
+      --photo var(--fade), --accent var(--fade), --sel var(--fade), --chip-bg var(--fade),
+      --chip-fg var(--fade), --chip-text var(--fade);
   }
-  .brand svg * { transition: fill var(--fade), stroke var(--fade); }
 
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
@@ -510,7 +527,13 @@
           {%- assign langs = im.language -%}
           {%- if langs.first == nil %}{% assign langs = im.language | split: ', ' %}{% endif -%}
           {%- for lg in langs %}{%- assign lgslug = lg | downcase | replace: '++', 'pp' | replace: '#', 'sharp' | replace: '/', '-' | replace: ' ', '-' -%}
-          <span class="impl-lang lang-{{ lgslug }}">{{ lg | escape }}</span>{% endfor %}
+          {%- case lgslug -%}
+            {%- when 'python' %}{% assign lgcolor = 'purple' %}
+            {%- when 'c', 'cpp', 'c-cpp', 'go' %}{% assign lgcolor = 'blue' %}
+            {%- when 'rust' %}{% assign lgcolor = 'orange' %}
+            {%- else %}{% assign lgcolor = '' %}
+          {%- endcase -%}
+          <span class="impl-lang {{ lgcolor }}">{{ lg | escape }}</span>{% endfor %}
           {%- endif %}
           {%- for t in im.tags %}<span class="tag {{ t.color | default: 'gray' }}">{{ t.name | escape }}</span>{% endfor %}
         </div>
@@ -662,40 +685,39 @@
       });
     }
 
-    // Every anchor on the page is handled in one pass: three separate passes walked the
-    // same nodes and bound overlapping listeners to the ones they shared.
+    // Everything leaving the page opens in a new tab. These are attributes, so they are
+    // written once at load and hold nothing afterwards.
     Array.prototype.forEach.call(document.querySelectorAll('a[href]'), function (a) {
       var href = a.getAttribute('href');
-      if (!href) return;
-
-      // A link inside <summary> would also open/close the entry: keep the click to itself.
-      if (a.closest('summary')) {
-        a.addEventListener('click', function (ev) { ev.stopPropagation(); });
-      }
-
-      // Safari re-runs its Reader-mode check on every hash navigation and flashes
-      // "Reader Available" in the address bar. Scroll without changing the URL, so the
-      // browser never sees a navigation. behavior is set explicitly rather than read from
-      // CSS so the animation runs even where prefers-reduced-motion would cancel it.
-      if (href.charAt(0) === '#') {
-        a.addEventListener('click', function (ev) {
-          var target = document.getElementById(href.slice(1));
-          if (!target) return;
-          ev.preventDefault();
-          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          // A real hash jump moves focus; keep that for keyboard and screen-reader users.
-          if (!target.hasAttribute('tabindex')) { target.setAttribute('tabindex', '-1'); }
-          try { target.focus({ preventScroll: true }); } catch (e) { target.focus(); }
-        });
-        return;
-      }
-
-      // Everything leaving the page opens in a new tab, except mail and phone links.
-      if (/^(mailto|tel):/i.test(href)) return;
-      if (a.hasAttribute('target')) return;
+      if (!href || href.charAt(0) === '#') return;
+      if (/^(mailto|tel):/i.test(href) || a.hasAttribute('target')) return;
       a.setAttribute('target', '_blank');
       var rel = a.getAttribute('rel');
       a.setAttribute('rel', rel ? rel + ' noopener noreferrer' : 'noopener noreferrer');
+    });
+
+    // A link inside <summary> would also open/close the entry. This one has to sit on the
+    // anchor: <summary> toggles as a default action while the event passes through it, so
+    // the click has to be stopped before it gets there. Delegation is too late.
+    Array.prototype.forEach.call(document.querySelectorAll('summary a'), function (a) {
+      a.addEventListener('click', function (ev) { ev.stopPropagation(); });
+    });
+
+    // Safari re-runs its Reader-mode check on every hash navigation and flashes
+    // "Reader Available" in the address bar. Scroll without changing the URL, so the
+    // browser never sees a navigation. behavior is set explicitly rather than read from
+    // CSS so the animation runs even where prefers-reduced-motion would cancel it.
+    // One delegated listener, not one closure per in-page link.
+    document.addEventListener('click', function (ev) {
+      var a = ev.target.closest && ev.target.closest('a[href^="#"]');
+      if (!a) return;
+      var target = document.getElementById(a.getAttribute('href').slice(1));
+      if (!target) return;
+      ev.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      // A real hash jump moves focus; keep that for keyboard and screen-reader users.
+      if (!target.hasAttribute('tabindex')) { target.setAttribute('tabindex', '-1'); }
+      try { target.focus({ preventScroll: true }); } catch (e) { target.focus(); }
     });
 
     // The bar wraps to more rows on narrow screens, so measure it rather than guess.
